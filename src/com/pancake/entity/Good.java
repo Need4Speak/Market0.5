@@ -35,8 +35,7 @@ public class Good implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Good(Classification classification, String name, Double price, String pictures, 
-			Timestamp addTime) {
+	public Good(Classification classification, String name, Double price, String pictures, Timestamp addTime) {
 		this.classification = classification;
 		this.name = name;
 		this.price = price;
@@ -65,6 +64,13 @@ public class Good implements java.io.Serializable {
 	}
 
 	// Property accessors
+
+	@Override
+	public String toString() {
+		return "Good [goodId=" + goodId + ", userByOwnerId=" + userByOwnerId + ", classification=" + classification
+				+ ", userByDelUserId=" + userByDelUserId + ", name=" + name + ", price=" + price + ", status=" + status
+				+ ", addTime=" + addTime + ", leaveWordses=" + leaveWordses + ", collections=" + collections + "]";
+	}
 
 	public Long getGoodId() {
 		return this.goodId;

@@ -54,7 +54,7 @@ public class GoodDaoImplTest {
 	 */
 	@Test
 	public void testFindById() {
-		fail("Not yet implemented");
+		System.out.println(gdi.findById(42l));
 	}
 
 	/**

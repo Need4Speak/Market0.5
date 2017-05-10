@@ -11,6 +11,7 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pancake.dao.GoodDao;
 import com.pancake.entity.Good;
 import com.pancake.util.BaseHibernateDAO;
 import com.pancake.util.HibernateSessionFactory;
@@ -26,7 +27,7 @@ import com.pancake.util.HibernateSessionFactory;
  * @see com.pancake.entity.Good
  * @author MyEclipse Persistence Tools
  */
-public class GoodDaoImpl extends BaseHibernateDAO {
+public class GoodDaoImpl implements GoodDao {
 	private static final Logger log = LoggerFactory.getLogger(GoodDaoImpl.class);
 	// property constants
 	public static final String NAME = "name";
@@ -54,7 +55,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public void delete(Good persistentInstance) {
 		log.debug("deleting Good instance");
 		try {
-			getSession().delete(persistentInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.delete(persistentInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -65,7 +70,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public Good findById(java.lang.Long id) {
 		log.debug("getting Good instance with id: " + id);
 		try {
-			Good instance = (Good) getSession().get("com.pancake.entity.Good", id);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Good instance = (Good) session.get("com.pancake.entity.Good", id);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -76,7 +85,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public List findByExample(Good instance) {
 		log.debug("finding Good instance by example");
 		try {
-			List results = getSession().createCriteria("com.pancake.entity.Good").add(Example.create(instance)).list();
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			List results = session.createCriteria("com.pancake.entity.Good").add(Example.create(instance)).list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
@@ -88,9 +101,13 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Good instance with property: " + propertyName + ", value: " + value);
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from Good as model where model." + propertyName + "= ?";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -125,8 +142,12 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public List findAll() {
 		log.debug("finding all Good instances");
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from Good";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -137,7 +158,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public Good merge(Good detachedInstance) {
 		log.debug("merging Good instance");
 		try {
-			Good result = (Good) getSession().merge(detachedInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Good result = (Good) session.merge(detachedInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -149,7 +174,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public void attachDirty(Good instance) {
 		log.debug("attaching dirty Good instance");
 		try {
-			getSession().saveOrUpdate(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.saveOrUpdate(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -160,7 +189,11 @@ public class GoodDaoImpl extends BaseHibernateDAO {
 	public void attachClean(Good instance) {
 		log.debug("attaching clean Good instance");
 		try {
-			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();	
+			session.buildLockRequest(LockOptions.NONE).lock(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
