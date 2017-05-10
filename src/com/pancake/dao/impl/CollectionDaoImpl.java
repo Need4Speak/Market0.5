@@ -4,12 +4,16 @@ import java.sql.Timestamp;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pancake.dao.CollectionDao;
 import com.pancake.entity.Collection;
 import com.pancake.util.BaseHibernateDAO;
+import com.pancake.util.HibernateSessionFactory;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -22,7 +26,7 @@ import com.pancake.util.BaseHibernateDAO;
  * @see com.pancake.entity.Collection
  * @author MyEclipse Persistence Tools
  */
-public class CollectionDaoImpl extends BaseHibernateDAO {
+public class CollectionDaoImpl implements CollectionDao {
 	private static final Logger log = LoggerFactory.getLogger(CollectionDaoImpl.class);
 	// property constants
 	public static final String DESCRIPTION = "description";
@@ -30,7 +34,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public void save(Collection transientInstance) {
 		log.debug("saving Collection instance");
 		try {
-			getSession().save(transientInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(transientInstance);	
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -41,7 +49,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public void delete(Collection persistentInstance) {
 		log.debug("deleting Collection instance");
 		try {
-			getSession().delete(persistentInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.delete(persistentInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -52,7 +64,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public Collection findById(java.lang.Long id) {
 		log.debug("getting Collection instance with id: " + id);
 		try {
-			Collection instance = (Collection) getSession().get("com.pancake.entity.Collection", id);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Collection instance = (Collection) session.get("com.pancake.entity.Collection", id);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -63,8 +79,12 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public List findByExample(Collection instance) {
 		log.debug("finding Collection instance by example");
 		try {
-			List results = getSession().createCriteria("com.pancake.entity.Collection").add(Example.create(instance))
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			List results = session.createCriteria("com.pancake.entity.Collection").add(Example.create(instance))
 					.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
@@ -76,9 +96,13 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Collection instance with property: " + propertyName + ", value: " + value);
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from Collection as model where model." + propertyName + "= ?";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -93,8 +117,12 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public List findAll() {
 		log.debug("finding all Collection instances");
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from Collection";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -105,7 +133,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public Collection merge(Collection detachedInstance) {
 		log.debug("merging Collection instance");
 		try {
-			Collection result = (Collection) getSession().merge(detachedInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Collection result = (Collection) session.merge(detachedInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -117,7 +149,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public void attachDirty(Collection instance) {
 		log.debug("attaching dirty Collection instance");
 		try {
-			getSession().saveOrUpdate(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.saveOrUpdate(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -128,7 +164,11 @@ public class CollectionDaoImpl extends BaseHibernateDAO {
 	public void attachClean(Collection instance) {
 		log.debug("attaching clean Collection instance");
 		try {
-			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.buildLockRequest(LockOptions.NONE).lock(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

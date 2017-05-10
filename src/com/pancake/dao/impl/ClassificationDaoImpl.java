@@ -34,13 +34,10 @@ public class ClassificationDaoImpl implements ClassificationDao {
 		log.debug("saving Classification instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
-			Transaction transaction = session.beginTransaction();
-			
+			Transaction transaction = session.beginTransaction();	
 			session.save(transientInstance);	
-			
 			transaction.commit();
-			HibernateSessionFactory.closeSession();
-			
+			HibernateSessionFactory.closeSession();		
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);

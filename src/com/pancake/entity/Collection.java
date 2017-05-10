@@ -41,6 +41,13 @@ public class Collection implements java.io.Serializable {
 
 	// Property accessors
 
+	@Override
+	public String toString() {
+		return "Collection [collectionId=" + collectionId + ", userByBuyerId=" + userByBuyerId + ", good=" + good
+				+ ", userBySellerId=" + userBySellerId + ", creationTime=" + creationTime + ", description="
+				+ description + "]";
+	}
+
 	public Long getCollectionId() {
 		return this.collectionId;
 	}
