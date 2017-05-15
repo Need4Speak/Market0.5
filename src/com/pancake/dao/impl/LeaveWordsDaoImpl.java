@@ -3,12 +3,16 @@ package com.pancake.dao.impl;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pancake.dao.LeaveWordsDao;
 import com.pancake.entity.LeaveWords;
 import com.pancake.util.BaseHibernateDAO;
+import com.pancake.util.HibernateSessionFactory;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -21,15 +25,21 @@ import com.pancake.util.BaseHibernateDAO;
  * @see com.pancake.entity.LeaveWords
  * @author MyEclipse Persistence Tools
  */
-public class LeaveWordsDaoImpl extends BaseHibernateDAO {
+public class LeaveWordsDaoImpl implements LeaveWordsDao{
 	private static final Logger log = LoggerFactory.getLogger(LeaveWordsDaoImpl.class);
 	// property constants
 	public static final String CONTENT = "content";
-
+	
+	@Override
 	public void save(LeaveWords transientInstance) {
 		log.debug("saving LeaveWords instance");
 		try {
-			getSession().save(transientInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(transientInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -37,10 +47,16 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void delete(LeaveWords persistentInstance) {
 		log.debug("deleting LeaveWords instance");
 		try {
-			getSession().delete(persistentInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.delete(persistentInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -48,10 +64,16 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public LeaveWords findById(java.lang.Integer id) {
 		log.debug("getting LeaveWords instance with id: " + id);
 		try {
-			LeaveWords instance = (LeaveWords) getSession().get("com.pancake.entity.LeaveWords", id);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			LeaveWords instance = (LeaveWords) session.get("com.pancake.entity.LeaveWords", id);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -59,11 +81,17 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByExample(LeaveWords instance) {
 		log.debug("finding LeaveWords instance by example");
 		try {
-			List results = getSession().createCriteria("com.pancake.entity.LeaveWords").add(Example.create(instance))
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			List results = session.createCriteria("com.pancake.entity.LeaveWords").add(Example.create(instance))
 					.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
@@ -72,12 +100,17 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding LeaveWords instance with property: " + propertyName + ", value: " + value);
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from LeaveWords as model where model." + propertyName + "= ?";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -85,15 +118,21 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByContent(Object content) {
 		return findByProperty(CONTENT, content);
 	}
 
+	@Override
 	public List findAll() {
 		log.debug("finding all LeaveWords instances");
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from LeaveWords";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -101,10 +140,16 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public LeaveWords merge(LeaveWords detachedInstance) {
 		log.debug("merging LeaveWords instance");
 		try {
-			LeaveWords result = (LeaveWords) getSession().merge(detachedInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			LeaveWords result = (LeaveWords) session.merge(detachedInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -113,10 +158,15 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void attachDirty(LeaveWords instance) {
 		log.debug("attaching dirty LeaveWords instance");
 		try {
-			getSession().saveOrUpdate(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.saveOrUpdate(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();	
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -124,10 +174,15 @@ public class LeaveWordsDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void attachClean(LeaveWords instance) {
 		log.debug("attaching clean LeaveWords instance");
 		try {
-			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.buildLockRequest(LockOptions.NONE).lock(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();		
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

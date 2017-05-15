@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Set;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pancake.dao.UserDao;
 import com.pancake.entity.User;
 import com.pancake.util.BaseHibernateDAO;
+import com.pancake.util.HibernateSessionFactory;
 
 /**
  * A data access object (DAO) providing persistence and search support for User
@@ -22,7 +26,7 @@ import com.pancake.util.BaseHibernateDAO;
  * @see com.pancake.entity.User
  * @author MyEclipse Persistence Tools
  */
-public class UserDaoImpl extends BaseHibernateDAO {
+public class UserDaoImpl implements UserDao {
 	private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 	// property constants
 	public static final String USER_NAME = "userName";
@@ -34,10 +38,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 	public static final String USER_PHOTO = "userPhoto";
 	public static final String USER_ADDRESS = "userAddress";
 
+	@Override
 	public void save(User transientInstance) {
 		log.debug("saving User instance");
 		try {
-			getSession().save(transientInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(transientInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -45,10 +55,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void delete(User persistentInstance) {
 		log.debug("deleting User instance");
 		try {
-			getSession().delete(persistentInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.delete(persistentInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -56,10 +72,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public User findById(java.lang.Long id) {
 		log.debug("getting User instance with id: " + id);
 		try {
-			User instance = (User) getSession().get("com.pancake.entity.User", id);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			User instance = (User) session.get("com.pancake.entity.User", id);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -67,10 +89,15 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByExample(User instance) {
 		log.debug("finding User instance by example");
 		try {
-			List results = getSession().createCriteria("com.pancake.entity.User").add(Example.create(instance)).list();
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			List results = session.createCriteria("com.pancake.entity.User").add(Example.create(instance)).list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
@@ -79,12 +106,18 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding User instance with property: " + propertyName + ", value: " + value);
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from User as model where model." + propertyName + "= ?";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -92,43 +125,56 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public List findByUserName(Object userName) {
 		return findByProperty(USER_NAME, userName);
 	}
 
+	@Override
 	public List findByPassword(Object password) {
 		return findByProperty(PASSWORD, password);
 	}
 
+	@Override
 	public List findByPhone(Object phone) {
 		return findByProperty(PHONE, phone);
 	}
 
+	@Override
 	public List findByWechat(Object wechat) {
 		return findByProperty(WECHAT, wechat);
 	}
 
+	@Override
 	public List findByEmail(Object email) {
 		return findByProperty(EMAIL, email);
 	}
 
+	@Override
 	public List findByGender(Object gender) {
 		return findByProperty(GENDER, gender);
 	}
 
+	@Override
 	public List findByUserPhoto(Object userPhoto) {
 		return findByProperty(USER_PHOTO, userPhoto);
 	}
 
+	@Override
 	public List findByUserAddress(Object userAddress) {
 		return findByProperty(USER_ADDRESS, userAddress);
 	}
 
+	@Override
 	public List findAll() {
 		log.debug("finding all User instances");
 		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			String queryString = "from User";
-			Query queryObject = getSession().createQuery(queryString);
+			Query queryObject = session.createQuery(queryString);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -136,10 +182,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public User merge(User detachedInstance) {
 		log.debug("merging User instance");
 		try {
-			User result = (User) getSession().merge(detachedInstance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			User result = (User) session.merge(detachedInstance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -148,10 +200,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void attachDirty(User instance) {
 		log.debug("attaching dirty User instance");
 		try {
-			getSession().saveOrUpdate(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.saveOrUpdate(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -159,10 +217,16 @@ public class UserDaoImpl extends BaseHibernateDAO {
 		}
 	}
 
+	@Override
 	public void attachClean(User instance) {
 		log.debug("attaching clean User instance");
 		try {
-			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.buildLockRequest(LockOptions.NONE).lock(instance);
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

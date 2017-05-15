@@ -10,10 +10,10 @@
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="good" class="com.pancake.entity.Good" fetch="select">
+        <many-to-one name="good" class="com.pancake.entity.Good" lazy="false" fetch="join">
             <column name="good_id" />
         </many-to-one>
-        <many-to-one name="user" class="com.pancake.entity.User" fetch="select">
+        <many-to-one name="user" class="com.pancake.entity.User" lazy="false" fetch="join">
             <column name="user_id" />
         </many-to-one>
         <property name="content" type="java.lang.String">

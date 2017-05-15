@@ -28,6 +28,11 @@ public class LeaveWords implements java.io.Serializable {
 
 	// Property accessors
 
+//	@Override
+//	public String toString() {
+//		return "LeaveWords [id=" + id + ", good=" + good + ", user=" + user + ", content=" + content + "]";
+//	}
+
 	public Integer getId() {
 		return this.id;
 	}
