@@ -24,6 +24,8 @@ import com.pancake.entity.Favorite;
  *
  */
 public interface FavoriteDao {
+	public List findByBuyer(Object buyer);
+	
 	public void save(Favorite transientInstance);
 
 	public void delete(Favorite persistentInstance);

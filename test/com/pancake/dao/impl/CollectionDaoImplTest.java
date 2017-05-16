@@ -21,10 +21,10 @@ import org.junit.Test;
 */
 public class CollectionDaoImplTest {
 	
-	private CollectionDaoImpl cdi = new CollectionDaoImpl();
+	private FavoriteDaoImpl cdi = new FavoriteDaoImpl();
 	
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#save(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#save(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testSave() {
@@ -32,7 +32,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#delete(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#delete(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testDelete() {
@@ -40,7 +40,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#findById(java.lang.Long)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#findById(java.lang.Long)}.
 	 */
 	@Test
 	public void testFindById() {
@@ -48,7 +48,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#findByExample(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#findByExample(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testFindByExample() {
@@ -56,7 +56,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#findByProperty(java.lang.String, java.lang.Object)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#findByProperty(java.lang.String, java.lang.Object)}.
 	 */
 	@Test
 	public void testFindByProperty() {
@@ -64,7 +64,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#findByDescription(java.lang.Object)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#findByDescription(java.lang.Object)}.
 	 */
 	@Test
 	public void testFindByDescription() {
@@ -72,7 +72,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#findAll()}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#findAll()}.
 	 */
 	@Test
 	public void testFindAll() {
@@ -80,7 +80,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#merge(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#merge(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testMerge() {
@@ -88,7 +88,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#attachDirty(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#attachDirty(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testAttachDirty() {
@@ -96,7 +96,7 @@ public class CollectionDaoImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.pancake.dao.impl.CollectionDaoImpl#attachClean(com.pancake.entity.Collection)}.
+	 * Test method for {@link com.pancake.dao.impl.FavoriteDaoImpl#attachClean(com.pancake.entity.Collection)}.
 	 */
 	@Test
 	public void testAttachClean() {

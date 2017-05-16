@@ -17,9 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pancake.entity.Favorite;
 import com.pancake.entity.Good;
 import com.pancake.entity.Page;
+import com.pancake.entity.User;
+import com.pancake.service.FavoriteService;
 import com.pancake.service.GoodService;
+import com.pancake.service.UserService;
 
 /**
  * @ClassName: GoodController
@@ -34,6 +38,10 @@ public class GoodController {
 	private static final Logger logger = Logger.getLogger(GoodController.class);
 	@Autowired
 	private GoodService gs;
+	@Autowired
+	private UserService us;
+	@Autowired 
+	private FavoriteService fs;
 
 	@RequestMapping(value = "/IndexController")
 	public ModelAndView findAllGood(HttpServletRequest request, HttpServletResponse response) {
@@ -54,6 +62,31 @@ public class GoodController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/goodInfoController")
+	public ModelAndView goodInfo(HttpServletRequest request, HttpServletResponse response) {
+		// 获取 ID 为 goodId 的商品，及其是否被 session 中登录的用户收藏。
+		logger.info("goodInfoController called");
+		ModelAndView mav = null;
+		System.out.println("goodInfoController called");
+		Long goodId = Long.valueOf(request.getParameter("goodId"));
+		Good good = gs.getById(goodId);
+		Favorite favorite = null;
+		if (request.getSession().getAttribute("userName") != null) {
+			User buyer = us.getByName((String) request.getSession().getAttribute("userName"));
+			favorite = fs.getFavByGoodAndBuyer(goodId, buyer);
+			logger.info("Object favorite has been created");
+		} else {
+			logger.info("Object favorite has not been created");
+		}
 
+		if (null != good) {
+			mav = new ModelAndView("good_info");
+			mav.addObject("good", good);
+			mav.addObject("favorite", favorite);
+		} else {
+			mav = new ModelAndView("good_not_ready");
+		}
+		return mav;
+	}
 
 }

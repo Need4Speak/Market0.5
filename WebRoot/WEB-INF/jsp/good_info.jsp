@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ page language="java" import="com.pancake.entity.*,com.pancake.dao.*, java.util.Iterator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -62,30 +60,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<%@ include file="bar/categories_bar.jsp"%>
         <div class="row clearfix" style="margin-top: 50px;">
             <div class="col-md-12 column">
-                <img class="head" src="images/${goodForm.userName}/head/${userPhoto}" alt="我是头像">
+                <img class="head" src="${webroot}/images/${good.userByOwnerId.userName}/head/${good.userByOwnerId.userPhoto}" alt="我是头像">
             </div>
             <div class="col-md-12 column">
-                <p class="name">卖家：${goodForm.userName}</p>
+                <p class="name">卖家：${good.userByOwnerId.userName}</p>
             </div>
             <div class="col-md-12 column">
-                <p class="tel">手机：110</p>
+                <p class="name">所在校区：${good.userByOwnerId.userAddress}</p>
+            </div>
+            <div class="col-md-12 column">
+                <p class="tel">手机：${good.userByOwnerId.phone}</p>
             </div>
             <hr>
         </div>
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <p class="detail">商品名： ${goodForm.goodName}</p>
-                <p>价格：￥${goodForm.price}</p>
+                <p class="detail">商品名： ${good.name}</p>
+                <p>价格：￥${good.price}</p>
                 <hr>
                 <p class="detail">详情：</p>
-                <p class="detail">${goodForm.description}</p>
+                <p class="detail">${good.description}</p>
                 <hr>
             </div>
         </div>
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <c:forEach items="${goodForm.pictures}" var="picture">
-                    <img class="productphoto" src="images/${goodForm.userName}/goodPics/${picture}" alt="我是产品图片">
+                <c:forEach items="${fn:split(good.pictures, ', ')}" var="picture">
+                    <img class="productphoto" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${picture}" alt="我是产品图片">
                 </c:forEach>
             </div>
         </div>
@@ -94,13 +95,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:choose>
                     <c:when test="${userName != null}">
                         <c:choose>
-                            <c:when test="${collection == null || collection.status == 0 || collection.status == null}">
-                                <form action="collectController?goodId=${goodForm.goodId}" method="post">
+                            <c:when test="${favorite == null}">
+                                <form action="collectController?goodId=${good.goodId}" method="post">
                                     <input type="submit" class="btn btn-default btn-block active btn-danger" value="收藏">
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <form action="collectionCancelController/${collection.orderId}?page=good_info" method="post">
+                                <form action="favoriteCancelController/${favorite.orderId}?page=good_info" method="post">
                                     <% request.setAttribute("page", "good_info"); %>
                                         <input type="submit" class="btn btn-default btn-block active btn-danger" value="取消收藏">
                                 </form>
