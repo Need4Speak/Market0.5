@@ -8,6 +8,10 @@ public class LeaveWords implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8499405801904816107L;
 	private Integer id;
 	private Good good;
 	private User user;

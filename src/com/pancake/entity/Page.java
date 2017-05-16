@@ -8,9 +8,14 @@
 */
 package com.pancake.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Page<E> {
+public class Page<E> implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1450645161631875689L;
 	// 结果集
 	private List<E> list;
 	// 查询记录总数

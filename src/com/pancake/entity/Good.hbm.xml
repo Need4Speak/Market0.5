@@ -58,11 +58,11 @@
             </key>
             <one-to-many class="com.pancake.entity.LeaveWords" />
         </set>
-        <set name="collections" inverse="true" lazy="false">
+        <set name="favorites" inverse="true" lazy="false">
             <key>
                 <column name="good_id" not-null="true" />
             </key>
-            <one-to-many class="com.pancake.entity.Collection" />
+            <one-to-many class="com.pancake.entity.Favorite" />
         </set>
     </class>
 </hibernate-mapping>

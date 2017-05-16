@@ -11,6 +11,10 @@ public class School implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 507122829177957491L;
 	private Integer schoolId;
 	private String schoolName;
 	private Set users = new HashSet(0);

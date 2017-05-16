@@ -25,7 +25,7 @@
 		<mapping resource="com/pancake/entity/Classification.hbm.xml" />
 		<mapping resource="com/pancake/entity/Good.hbm.xml" />
 		<mapping resource="com/pancake/entity/LeaveWords.hbm.xml" />
-		<mapping resource="com/pancake/entity/Collection.hbm.xml" />
+		<mapping resource="com/pancake/entity/Favorite.hbm.xml" />
 		<mapping resource="com/pancake/entity/User.hbm.xml" />
 
 	</session-factory>

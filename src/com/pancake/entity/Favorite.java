@@ -3,14 +3,18 @@ package com.pancake.entity;
 import java.sql.Timestamp;
 
 /**
- * Collection entity. @author MyEclipse Persistence Tools
+ * Favorite entity. @author MyEclipse Persistence Tools
  */
 
-public class Collection implements java.io.Serializable {
+public class Favorite implements java.io.Serializable {
 
 	// Fields
 
-	private Long collectionId;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5519186580026277662L;
+	private Long favoriteId;
 	private User userByBuyerId;
 	private Good good;
 	private User userBySellerId;
@@ -20,18 +24,18 @@ public class Collection implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Collection() {
+	public Favorite() {
 	}
 
 	/** minimal constructor */
-	public Collection(User userByBuyerId, Good good, User userBySellerId) {
+	public Favorite(User userByBuyerId, Good good, User userBySellerId) {
 		this.userByBuyerId = userByBuyerId;
 		this.good = good;
 		this.userBySellerId = userBySellerId;
 	}
 
 	/** full constructor */
-	public Collection(User userByBuyerId, Good good, User userBySellerId, Timestamp creationTime, String description) {
+	public Favorite(User userByBuyerId, Good good, User userBySellerId, Timestamp creationTime, String description) {
 		this.userByBuyerId = userByBuyerId;
 		this.good = good;
 		this.userBySellerId = userBySellerId;
@@ -43,17 +47,17 @@ public class Collection implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Collection [collectionId=" + collectionId + ", userByBuyerId=" + userByBuyerId + ", good=" + good
+		return "Favorite [favoriteId=" + favoriteId + ", userByBuyerId=" + userByBuyerId + ", good=" + good
 				+ ", userBySellerId=" + userBySellerId + ", creationTime=" + creationTime + ", description="
 				+ description + "]";
 	}
 
-	public Long getCollectionId() {
-		return this.collectionId;
+	public Long getFavoriteId() {
+		return this.favoriteId;
 	}
 
-	public void setCollectionId(Long collectionId) {
-		this.collectionId = collectionId;
+	public void setFavoriteId(Long favoriteId) {
+		this.favoriteId = favoriteId;
 	}
 
 	public User getUserByBuyerId() {

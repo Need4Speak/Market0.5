@@ -11,6 +11,10 @@ public class Classification implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3275386915559604990L;
 	private Integer classificationId;
 	private String classificationName;
 	private Set goods = new HashSet(0);

@@ -102,4 +102,10 @@ public class GoodServiceImpl implements GoodService {
 		return page;
 	}
 
+
+	@Override
+	public Good getById(Long id) {
+		return gdi.findById(id);
+	}
+
 }

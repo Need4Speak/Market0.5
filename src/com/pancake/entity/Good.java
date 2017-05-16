@@ -12,6 +12,10 @@ public class Good implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2601422599566748979L;
 	private Long goodId;
 	private User userByOwnerId;
 	private Classification classification;
@@ -26,7 +30,7 @@ public class Good implements java.io.Serializable {
 	private Timestamp delTime;
 	private Timestamp comleteTime;
 	private Set leaveWordses = new HashSet(0);
-	private Set collections = new HashSet(0);
+	private Set favorites = new HashSet(0);
 
 	// Constructors
 
@@ -46,7 +50,7 @@ public class Good implements java.io.Serializable {
 	/** full constructor */
 	public Good(User userByOwnerId, Classification classification, User userByDelUserId, String name, Double price,
 			String pictures, Double freight, String description, Integer status, Timestamp addTime, Timestamp delTime,
-			Timestamp comleteTime, Set leaveWordses, Set collections) {
+			Timestamp comleteTime, Set leaveWordses, Set favorites) {
 		this.userByOwnerId = userByOwnerId;
 		this.classification = classification;
 		this.userByDelUserId = userByDelUserId;
@@ -60,7 +64,7 @@ public class Good implements java.io.Serializable {
 		this.delTime = delTime;
 		this.comleteTime = comleteTime;
 		this.leaveWordses = leaveWordses;
-		this.collections = collections;
+		this.favorites = favorites;
 	}
 
 	// Property accessors
@@ -69,7 +73,7 @@ public class Good implements java.io.Serializable {
 	public String toString() {
 		return "Good [goodId=" + goodId + ", userByOwnerId=" + userByOwnerId + ", classification=" + classification
 				+ ", userByDelUserId=" + userByDelUserId + ", name=" + name + ", price=" + price + ", status=" + status
-				+ ", addTime=" + addTime + ", leaveWordses=" + leaveWordses + ", collections=" + collections + "]";
+				+ ", addTime=" + addTime + ", leaveWordses=" + leaveWordses + ", favorites=" + favorites + "]";
 	}
 
 	public Long getGoodId() {
@@ -184,12 +188,12 @@ public class Good implements java.io.Serializable {
 		this.leaveWordses = leaveWordses;
 	}
 
-	public Set getCollections() {
-		return this.collections;
+	public Set getFavorites() {
+		return this.favorites;
 	}
 
-	public void setCollections(Set collections) {
-		this.collections = collections;
+	public void setFavorites(Set favorites) {
+		this.favorites = favorites;
 	}
 
 }

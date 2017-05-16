@@ -10,8 +10,8 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pancake.dao.CollectionDao;
-import com.pancake.entity.Collection;
+import com.pancake.dao.FavoriteDao;
+import com.pancake.entity.Favorite;
 import com.pancake.util.BaseHibernateDAO;
 import com.pancake.util.HibernateSessionFactory;
 
@@ -23,15 +23,15 @@ import com.pancake.util.HibernateSessionFactory;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see com.pancake.entity.Collection
+ * @see com.pancake.entity.Favorite
  * @author MyEclipse Persistence Tools
  */
-public class CollectionDaoImpl implements CollectionDao {
+public class CollectionDaoImpl implements FavoriteDao {
 	private static final Logger log = LoggerFactory.getLogger(CollectionDaoImpl.class);
 	// property constants
 	public static final String DESCRIPTION = "description";
 
-	public void save(Collection transientInstance) {
+	public void save(Favorite transientInstance) {
 		log.debug("saving Collection instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
@@ -46,7 +46,7 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public void delete(Collection persistentInstance) {
+	public void delete(Favorite persistentInstance) {
 		log.debug("deleting Collection instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
@@ -61,12 +61,12 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public Collection findById(java.lang.Long id) {
+	public Favorite findById(java.lang.Long id) {
 		log.debug("getting Collection instance with id: " + id);
 		try {
 			Session session = HibernateSessionFactory.getSession();
 			Transaction transaction = session.beginTransaction();
-			Collection instance = (Collection) session.get("com.pancake.entity.Collection", id);
+			Favorite instance = (Favorite) session.get("com.pancake.entity.Collection", id);
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
 			return instance;
@@ -76,7 +76,7 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public List findByExample(Collection instance) {
+	public List findByExample(Favorite instance) {
 		log.debug("finding Collection instance by example");
 		try {
 			Session session = HibernateSessionFactory.getSession();
@@ -130,12 +130,12 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public Collection merge(Collection detachedInstance) {
+	public Favorite merge(Favorite detachedInstance) {
 		log.debug("merging Collection instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
 			Transaction transaction = session.beginTransaction();
-			Collection result = (Collection) session.merge(detachedInstance);
+			Favorite result = (Favorite) session.merge(detachedInstance);
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
 			log.debug("merge successful");
@@ -146,7 +146,7 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public void attachDirty(Collection instance) {
+	public void attachDirty(Favorite instance) {
 		log.debug("attaching dirty Collection instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
@@ -161,7 +161,7 @@ public class CollectionDaoImpl implements CollectionDao {
 		}
 	}
 
-	public void attachClean(Collection instance) {
+	public void attachClean(Favorite instance) {
 		log.debug("attaching clean Collection instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();

@@ -22,8 +22,8 @@ public class User implements java.io.Serializable {
 	private String userPhoto;
 	private String userAddress;
 	private Set leaveWordses = new HashSet(0);
-	private Set collectionsForBuyerId = new HashSet(0);
-	private Set collectionsForSellerId = new HashSet(0);
+	private Set favoritesForBuyerId = new HashSet(0);
+	private Set favoritesForSellerId = new HashSet(0);
 	private Set goodsForDelUserId = new HashSet(0);
 	private Set goodsForOwnerId = new HashSet(0);
 
@@ -45,8 +45,8 @@ public class User implements java.io.Serializable {
 
 	/** full constructor */
 	public User(School school, String userName, String password, String phone, String wechat, String email,
-			String gender, String userPhoto, String userAddress, Set leaveWordses, Set collectionsForBuyerId,
-			Set collectionsForSellerId, Set goodsForDelUserId, Set goodsForOwnerId) {
+			String gender, String userPhoto, String userAddress, Set leaveWordses, Set favoritesForBuyerId,
+			Set favoritesForSellerId, Set goodsForDelUserId, Set goodsForOwnerId) {
 		this.school = school;
 		this.userName = userName;
 		this.password = password;
@@ -57,8 +57,8 @@ public class User implements java.io.Serializable {
 		this.userPhoto = userPhoto;
 		this.userAddress = userAddress;
 		this.leaveWordses = leaveWordses;
-		this.collectionsForBuyerId = collectionsForBuyerId;
-		this.collectionsForSellerId = collectionsForSellerId;
+		this.favoritesForBuyerId = favoritesForBuyerId;
+		this.favoritesForSellerId = favoritesForSellerId;
 		this.goodsForDelUserId = goodsForDelUserId;
 		this.goodsForOwnerId = goodsForOwnerId;
 	}
@@ -153,20 +153,20 @@ public class User implements java.io.Serializable {
 		this.leaveWordses = leaveWordses;
 	}
 
-	public Set getCollectionsForBuyerId() {
-		return this.collectionsForBuyerId;
+	public Set getFavoritesForBuyerId() {
+		return this.favoritesForBuyerId;
 	}
 
-	public void setCollectionsForBuyerId(Set collectionsForBuyerId) {
-		this.collectionsForBuyerId = collectionsForBuyerId;
+	public void setFavoritesForBuyerId(Set favoritesForBuyerId) {
+		this.favoritesForBuyerId = favoritesForBuyerId;
 	}
 
-	public Set getCollectionsForSellerId() {
-		return this.collectionsForSellerId;
+	public Set getFavoritesForSellerId() {
+		return this.favoritesForSellerId;
 	}
 
-	public void setCollectionsForSellerId(Set collectionsForSellerId) {
-		this.collectionsForSellerId = collectionsForSellerId;
+	public void setFavoritesForSellerId(Set favoritesForSellerId) {
+		this.favoritesForSellerId = favoritesForSellerId;
 	}
 
 	public Set getGoodsForDelUserId() {

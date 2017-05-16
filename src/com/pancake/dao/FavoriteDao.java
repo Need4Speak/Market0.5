@@ -14,7 +14,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
-import com.pancake.entity.Collection;
+import com.pancake.entity.Favorite;
 
 /**
  * @ClassName: CollectionDao
@@ -23,14 +23,14 @@ import com.pancake.entity.Collection;
  * @date 2017年5月10日 下午4:27:52
  *
  */
-public interface CollectionDao {
-	public void save(Collection transientInstance);
+public interface FavoriteDao {
+	public void save(Favorite transientInstance);
 
-	public void delete(Collection persistentInstance);
+	public void delete(Favorite persistentInstance);
 
-	public Collection findById(java.lang.Long id);
+	public Favorite findById(java.lang.Long id);
 
-	public List findByExample(Collection instance);
+	public List findByExample(Favorite instance);
 
 	public List findByProperty(String propertyName, Object value);
 
@@ -38,9 +38,9 @@ public interface CollectionDao {
 
 	public List findAll();
 
-	public Collection merge(Collection detachedInstance);
+	public Favorite merge(Favorite detachedInstance);
 
-	public void attachDirty(Collection instance);
+	public void attachDirty(Favorite instance);
 
-	public void attachClean(Collection instance);
+	public void attachClean(Favorite instance);
 }
