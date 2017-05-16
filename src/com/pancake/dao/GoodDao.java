@@ -17,6 +17,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 
 import com.pancake.entity.Good;
+import com.pancake.entity.User;
 import com.pancake.util.HibernateSessionFactory;
 
 /**
@@ -27,6 +28,13 @@ import com.pancake.util.HibernateSessionFactory;
 *
 */
 public interface GoodDao {
+	public List<Good> queryGoodWithPage(int offset, int length, Object user);
+	
+	public List findByUser(User user);
+	
+	public List<Good> findAllGoodsWithPage(int offset, int length);
+	
+	public List findAllByAddTime();
 
 	public void save(Good transientInstance);
 

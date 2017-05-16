@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pancake.dao.GoodDao;
 import com.pancake.entity.Good;
+import com.pancake.entity.User;
 import com.pancake.util.BaseHibernateDAO;
 import com.pancake.util.HibernateSessionFactory;
 
@@ -37,12 +38,71 @@ public class GoodDaoImpl implements GoodDao {
 	public static final String DESCRIPTION = "description";
 	public static final String STATUS = "status";
 
+	@Override
+	public List<Good> queryGoodWithPage(int offset, int length, Object user) {
+		List<Good> entitylist = null;
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Query query = session.createQuery("from Good where user = ? and status != 0 order by add_time desc");
+			query.setParameter(0, user);
+			query.setFirstResult(offset);
+			query.setMaxResults(length);
+			entitylist = query.list();
+
+		} catch (RuntimeException re) {
+			throw re;
+		}
+
+		return entitylist;
+	}
+
+	@Override
+	public List findByUser(User user) {
+		return findByProperty("user", user);
+	}
+
+	@Override
+	public List<Good> findAllGoodsWithPage(int offset, int length) {
+		List<Good> entitylist = null;
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Query query = session.createQuery("from Good where status != 0 order by add_time desc");
+			query.setFirstResult(offset);
+			query.setMaxResults(length);
+			entitylist = query.list();
+
+		} catch (RuntimeException re) {
+			throw re;
+		}
+
+		return entitylist;
+	}
+
+	
+	@Override
+	public List findAllByAddTime() {
+		//log.debug("finding all Good instances");
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			String queryString = "from Good order by add_time desc";
+			Query queryObject = session.createQuery(queryString);
+			List list = queryObject.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			return list;
+		} catch (RuntimeException re) {
+			//log.error("find all failed", re);
+			throw re;
+		}
+	}
+
 	public void save(Good transientInstance) {
 		log.debug("saving Good instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
-			Transaction transaction = session.beginTransaction();			
-			session.save(transientInstance);			
+			Transaction transaction = session.beginTransaction();
+			session.save(transientInstance);
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
 			log.debug("save successful");
@@ -190,7 +250,7 @@ public class GoodDaoImpl implements GoodDao {
 		log.debug("attaching clean Good instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
-			Transaction transaction = session.beginTransaction();	
+			Transaction transaction = session.beginTransaction();
 			session.buildLockRequest(LockOptions.NONE).lock(instance);
 			transaction.commit();
 			HibernateSessionFactory.closeSession();

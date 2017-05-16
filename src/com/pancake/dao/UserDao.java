@@ -17,12 +17,12 @@ import org.hibernate.criterion.Example;
 import com.pancake.entity.User;
 
 /**
-* @ClassName: UserDao
-* @Description: TODO(这里用一句话描述这个类的作用)
-* @author chao zcsd2668@163.com
-* @date 2017年5月15日 下午4:57:29
-*
-*/
+ * @ClassName: UserDao
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author chao zcsd2668@163.com
+ * @date 2017年5月15日 下午4:57:29
+ *
+ */
 public interface UserDao {
 	public void save(User transientInstance);
 
@@ -47,6 +47,7 @@ public interface UserDao {
 	public List findByGender(Object gender);
 
 	public List findByUserPhoto(Object userPhoto);
+
 	public List findByUserAddress(Object userAddress);
 
 	public List findAll();
@@ -56,4 +57,5 @@ public interface UserDao {
 	public void attachDirty(User instance);
 
 	public void attachClean(User instance);
+
 }
