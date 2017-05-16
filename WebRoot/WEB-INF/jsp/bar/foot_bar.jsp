@@ -54,12 +54,12 @@ a {
                     <tr>
                         <td class="tdcenter" style="width:20%;">
                             <div>
-                                <a href="IndexController"><img class="foot_img aligncenter" alt="首页" src="${webroot}/images/home.png" /></a>
+                                <a href="${webroot}/GoodController/IndexController"><img class="foot_img aligncenter" alt="首页" src="${webroot}/images/home.png" /></a>
                             </div>
                         </td>
                         <td class="tdcenter" style="width:20%;">
                             <div>
-                                <a href="collectionListController?collectionStatus=1"><img class="foot_img aligncenter" alt="收藏" src="${webroot}/images/heart.png" /></a>
+                                <a href="${webroot}/FavoriteController/favoriteListController"><img class="foot_img aligncenter" alt="收藏" src="${webroot}/images/heart.png" /></a>
                             </div>
                         </td>
                         <td class="tdcenter" style="width: 20%;">

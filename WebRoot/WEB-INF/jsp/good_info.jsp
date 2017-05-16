@@ -98,7 +98,7 @@
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <form action="favoriteCancelController/${favorite.orderId}?page=good_info" method="post">
+                                <form action="favoriteCancelController/${favorite.favoriteId}?page=good_info" method="post">
                                     <% request.setAttribute("page", "good_info"); %>
                                         <input type="submit" class="btn btn-default btn-block active btn-danger" value="取消收藏">
                                 </form>

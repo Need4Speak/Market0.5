@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -11,10 +12,8 @@
     <title>我的收藏</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="${webroot}/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-
-    
     .price {
         font-size: 16px;
         color: red;
@@ -39,44 +38,38 @@
 <body>
     <div class="container">
         <%@ include file="bar/categories_bar.jsp"%>
-            <c:forEach items="${page.list}" var="collection">
-                <c:if test="${collection.status == 1}">
-                    <div class="row clearfix divcss5">
-                        <div class="col-xs-4 column">
-                            <c:set var="first_pic" value="${fn:split(collection.good.pictures, ', ')[0]}" />
-                            <img src="images/${collection.good.user.userName}/goodPics/${first_pic}" class="img-rounded imgcss5">
+            <c:forEach items="${page.list}" var="favorite">
+                <div class="row clearfix divcss5">
+                    <div class="col-xs-4 column">
+                        <c:set var="first_pic" value="${fn:split(favorite.good.pictures, ', ')[0]}" />
+                        <img src="${webroot}/images/${favorite.userByBuyerId.userName}/goodPics/${first_pic}" class="img-rounded imgcss5">
+                    </div>
+                    <div class="col-xs-4 column">
+                        <div class="div-heighthalf">
+                            <p class="text-left center-vertical">
+                                <strong>${favorite.good.name}</strong>
+                                <span class="discribtion price">￥${favorite.good.price}</span>
+                            </p>
                         </div>
-                        <div class="col-xs-4 column">
-                            <div class="div-heighthalf">
-                                <p class="text-left center-vertical">
-                                    <strong>${collection.good.name}</strong>
-                                    <span class="discribtion price">￥${collection.good.price}</span>
-                                </p>
-                            </div>
-                            <div class="div-heighthalf">
-                                <p class="text-left center-vertical">
-                                    <fmt:formatDate value="${collection.good.addTime}" type="both" />
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 column">
-                            <div class="div-heighthalf">
-                                <p class="text-right center-vertical price">
-                                    <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='goodInfoController?goodId=${collection.good.goodId}'}">查看</button>
-                                </p>
-                            </div>
-                            <div class="div-heighthalf">
-                                <p class="text-right center-vertical">
-                                    <c:choose>
-                                        <c:when test="${collection.status == 1}">
-                                            <button type="button" class="btn btn-default btn-sm" onclick="{location.href='collectionCancelController/${collection.orderId}?page=collection_list'}">取消收藏</button>
-                                        </c:when>
-                                    </c:choose>
-                                </p>
-                            </div>
+                        <div class="div-heighthalf">
+                            <p class="text-left center-vertical">
+                                <fmt:formatDate value="${favorite.creationTime}" type="both" />
+                            </p>
                         </div>
                     </div>
-                </c:if>
+                    <div class="col-xs-4 column">
+                        <div class="div-heighthalf">
+                            <p class="text-right center-vertical price">
+                                <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='${webroot}/GoodController/goodInfoController?goodId=${favorite.good.goodId}'}">查看</button>
+                            </p>
+                        </div>
+                        <div class="div-heighthalf">
+                            <p class="text-right center-vertical">
+                                <button type="button" class="btn btn-default btn-sm" onclick="{location.href='favoriteCancelController/${favorite.favoriteId}?page=favorite_list'}">取消收藏</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </c:forEach>
             <div class="row clearfix" style="margin-bottom: 60px;margin-top: 20px;text-align: center;">
                 <div class="col-xs-12 column" style="height: 50px">
@@ -85,12 +78,12 @@
                 </div>
                 <div class="col-xs-12 column">
                     <div class="btn-group btn-group-md">
-                        <button class="btn btn-default" type="button" onclick="{location.href='collectionListController?pageNo=${page.topPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='favoriteListController?pageNo=${page.topPageNo}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 首页
                         </button>
                         <c:choose>
                             <c:when test="${page.pageNo!=1}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='collectionListController?pageNo=${page.previousPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='favoriteListController?pageNo=${page.previousPageNo}'}">
                                     <em class="glyphicon glyphicon-align-left"></em> 上一页
                                 </button>
                             </c:when>
@@ -102,7 +95,7 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${page.pageNo != page.totalPages}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='collectionListController?pageNo=${page.nextPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='favoriteListController?pageNo=${page.nextPageNo}'}">
                                     <em class="glyphicon glyphicon-align-right"></em> 下一页
                                 </button>
                             </c:when>
@@ -112,7 +105,7 @@
                                 </button>
                             </c:otherwise>
                         </c:choose>
-                        <button class="btn btn-default" type="button" onclick="{location.href='collectionListController?pageNo=${page.bottomPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='favoriteListController?pageNo=${page.bottomPageNo}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 尾页
                         </button>
                     </div>
@@ -125,4 +118,5 @@
 </body>
 
 </html>
+
 

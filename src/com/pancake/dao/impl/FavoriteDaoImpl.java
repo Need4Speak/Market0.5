@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pancake.dao.FavoriteDao;
 import com.pancake.entity.Favorite;
+import com.pancake.entity.Page;
 import com.pancake.util.HibernateSessionFactory;
 
 /**
@@ -30,16 +31,37 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	public static final String DESCRIPTION = "description";
 
 	@Override
+	public List<Favorite> FindUserFavsWithPage(int offset, int length, Object value) {
+		List<Favorite> entitylist = null;
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Query query = session
+					.createQuery("from Favorite where userByBuyerId = ? order by creationTime desc");
+			query.setParameter(0, value);
+			query.setFirstResult(offset);
+			query.setMaxResults(length);
+			entitylist = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+			return entitylist;
+
+		} catch (RuntimeException re) {
+			throw re;
+		}
+	}
+
+	@Override
 	public List findByBuyer(Object buyer) {
 		return findByProperty("userByBuyerId", buyer);
 	}
-	
+
 	public void save(Favorite transientInstance) {
 		log.debug("saving Favorite instance");
 		try {
 			Session session = HibernateSessionFactory.getSession();
 			Transaction transaction = session.beginTransaction();
-			session.save(transientInstance);	
+			session.save(transientInstance);
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
 			log.debug("save successful");
@@ -84,8 +106,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		try {
 			Session session = HibernateSessionFactory.getSession();
 			Transaction transaction = session.beginTransaction();
-			List results = session.createCriteria("com.pancake.entity.Favorite").add(Example.create(instance))
-					.list();
+			List results = session.createCriteria("com.pancake.entity.Favorite").add(Example.create(instance)).list();
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
 			log.debug("find by example successful, result size: " + results.size());
@@ -104,9 +125,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 			String queryString = "from Favorite as model where model." + propertyName + "= ?";
 			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			List list = queryObject.list();
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
-			return queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;

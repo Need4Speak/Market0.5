@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -35,7 +37,7 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <img alt="140x140" src="images/system/head.jpg" class="img-circle" />
+                <img alt="140x140" src="${webroot}/images/system/head.jpg" class="img-circle" />
             </div>
         </div>
         <form action="loginController" method="post">

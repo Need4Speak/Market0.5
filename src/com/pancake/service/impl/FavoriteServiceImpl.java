@@ -8,12 +8,15 @@
 */
 package com.pancake.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.pancake.dao.impl.FavoriteDaoImpl;
+import com.pancake.dao.impl.UserDaoImpl;
 import com.pancake.entity.Favorite;
+import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.service.FavoriteService;
 
@@ -28,6 +31,7 @@ import com.pancake.service.FavoriteService;
 public class FavoriteServiceImpl implements FavoriteService {
 
 	private FavoriteDaoImpl fdi = new FavoriteDaoImpl();
+	private UserDaoImpl udi = new UserDaoImpl();
 	@Override
 	public Favorite getFavByGoodAndBuyer(Long goodId, User buyer) {
 		// 根据商品和用户来查询相应的收藏信息，如果不存在，则返回 null。
@@ -40,6 +44,27 @@ public class FavoriteServiceImpl implements FavoriteService {
 			}
 		}
 		return favorite;
+	}
+	@Override
+	public Page<Favorite> GetUserFavsWithPage(int currentPage, int pageSize, String userName) {
+		Page<Favorite> page = new Page<Favorite>();
+		// 当前页开始记录
+		int offset = page.countOffset(currentPage, pageSize);
+		
+		// findByUserName 返回值是list，但数据库中有唯一值约束，用户名唯一
+		User user = (User) udi.findByUserName(userName).get(0);
+		// 分页查询结果集
+		List<Favorite> list = fdi.FindUserFavsWithPage(offset, pageSize, user);
+		// 总记录数
+		List<Favorite> collections = fdi.findByBuyer(user);
+		int allRow = collections.size();
+
+		page.setPageNo(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalRecords(allRow);
+		page.setList(list);
+
+		return page;
 	}
 
 }

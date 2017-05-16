@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	public User getByName(String userName) {
 		// 虽然findByUserName 函数返回类型为list，但因为数据库中建了username 的唯一值索引，
 		// 所以实际返回一个 User 对象。
-		return (User) udi.findByUserName(userName);
+		return (User) udi.findByUserName(userName).get(0);
 	}
 
 	@Override

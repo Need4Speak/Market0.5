@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
 import com.pancake.entity.Favorite;
+import com.pancake.entity.Page;
 
 /**
  * @ClassName: CollectionDao
@@ -24,6 +25,8 @@ import com.pancake.entity.Favorite;
  *
  */
 public interface FavoriteDao {
+	public List<Favorite> FindUserFavsWithPage(int offset, int length, Object value);
+	
 	public List findByBuyer(Object buyer);
 	
 	public void save(Favorite transientInstance);

@@ -115,10 +115,10 @@ public class UserDaoImpl implements UserDao {
 			String queryString = "from User as model where model." + propertyName + "= ?";
 			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			List list = queryObject.list();
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
-
-			return queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;

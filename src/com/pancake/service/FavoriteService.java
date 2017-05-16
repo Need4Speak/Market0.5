@@ -9,6 +9,7 @@
 package com.pancake.service;
 
 import com.pancake.entity.Favorite;
+import com.pancake.entity.Page;
 import com.pancake.entity.User;
 
 /**
@@ -20,4 +21,5 @@ import com.pancake.entity.User;
 */
 public interface FavoriteService {
 	public Favorite getFavByGoodAndBuyer(Long goodId, User buyer);
+	public Page<Favorite> GetUserFavsWithPage(int currentPage, int pageSize, String userName);
 }
