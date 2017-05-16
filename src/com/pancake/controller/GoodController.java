@@ -45,6 +45,7 @@ public class GoodController {
 
 	@RequestMapping(value = "/IndexController")
 	public ModelAndView findAllGood(HttpServletRequest request, HttpServletResponse response) {
+		// 获取所有商品的信息
 		logger.info("IndexController called");
 		ModelAndView mav = new ModelAndView("show_goods");
 		try {

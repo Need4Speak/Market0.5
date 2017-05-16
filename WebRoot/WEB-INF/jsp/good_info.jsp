@@ -14,7 +14,7 @@
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="${webroot}/css/main.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
     img {
         width: 100%;
@@ -31,20 +31,18 @@
     
     .name {
         text-align: left;
-        font-size: 12px;
+        font-size: 20px;
+        font-style: bold;
         display: inline;
-        margin-top: 20px;
+        margin-top: 10px;
     }
     
     .price {
         font-size: 16px;
         color: red;
         font-style: bold;
-        text-align: right;
-    }
-    
-    .detail {
-        font-size: 15px;
+        text-align: left;
+        margin-top: 10px;
     }
     
     hr {
@@ -59,24 +57,23 @@
     <div class="container">
     	<%@ include file="bar/categories_bar.jsp"%>
         <div class="row clearfix" style="margin-top: 50px;">
-            <div class="col-md-12 column">
+            <div class="col-xs-2 column">
                 <img class="head" src="${webroot}/images/${good.userByOwnerId.userName}/head/${good.userByOwnerId.userPhoto}" alt="我是头像">
             </div>
-            <div class="col-md-12 column">
-                <p class="name">卖家：${good.userByOwnerId.userName}</p>
+            <div class="col-xs-5 column">
+                <p class="text-right">${good.userByOwnerId.userName}</p>
+                <p class="text-right">${good.userByOwnerId.phone}</p>
             </div>
-            <div class="col-md-12 column">
-                <p class="name">所在校区：${good.userByOwnerId.userAddress}</p>
+            <div class="col-xs-5 column">
+                <p class="text-right">${good.userByOwnerId.userAddress}</p>
+                <p class="text-right">${good.userByOwnerId.school.schoolName}</p>
             </div>
-            <div class="col-md-12 column">
-                <p class="tel">手机：${good.userByOwnerId.phone}</p>
-            </div>
-            <hr>
         </div>
+        <hr>
         <div class="row clearfix">
-            <div class="col-md-12 column">
-                <p class="detail">商品名： ${good.name}</p>
-                <p>价格：￥${good.price}</p>
+            <div class="col-xs-12 column">
+                <p class="name">商品名： ${good.name}</p>
+                <p class="price">价格：￥${good.price}</p>
                 <hr>
                 <p class="detail">详情：</p>
                 <p class="detail">${good.description}</p>
@@ -84,14 +81,14 @@
             </div>
         </div>
         <div class="row clearfix">
-            <div class="col-md-12 column">
+            <div class="col-xs-12 column">
                 <c:forEach items="${fn:split(good.pictures, ', ')}" var="picture">
                     <img class="productphoto" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${picture}" alt="我是产品图片">
                 </c:forEach>
             </div>
         </div>
         <div class="row clearfix">
-            <div class="col-md-12 column" style="margin-bottom: 50px;">
+            <div class="col-xs-12 column" style="margin-bottom: 50px;">
                 <c:choose>
                     <c:when test="${userName != null}">
                         <c:choose>
@@ -117,8 +114,8 @@
                 </form>
             </div>
         </div>
-    </div>
-    <%@ include file="bar/foot_bar.jsp"%>
+        <%@ include file="bar/foot_bar.jsp"%>
+    </div>  
 </body>
 
 </html>

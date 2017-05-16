@@ -10,7 +10,7 @@
             <column name="user_id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="school" class="com.pancake.entity.School" fetch="select">
+        <many-to-one name="school" class="com.pancake.entity.School" lazy="false" fetch="join">
             <column name="school_id" not-null="true" />
         </many-to-one>
         <property name="userName" type="java.lang.String">
