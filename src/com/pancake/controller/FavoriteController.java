@@ -1,14 +1,19 @@
 package com.pancake.controller;
 
+import java.sql.Timestamp;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pancake.entity.Favorite;
 import com.pancake.entity.Page;
 import com.pancake.service.FavoriteService;
 
@@ -42,6 +47,25 @@ public class FavoriteController {
 		}
 		else {
 			mav = new ModelAndView("redirect:/UserLogController/loginBarController");
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/favoriteCancelController/{favoriteId}")
+	public ModelAndView favoriteCancel(Model model, @PathVariable Long favoriteId, HttpServletRequest  request) {
+		// 根据favoriteId，直接从数据库中删除 favorite。
+		Favorite favorite = fs.getById(favoriteId);
+		fs.delete(favorite);
+		String page = request.getParameter("page");
+		ModelAndView mav = null;
+		if(null != page && page.equals("good_info")){
+			mav = new ModelAndView("redirect:/GoodController/goodInfoController?goodId=" + favorite.getGood().getGoodId());
+		}
+		else if (null != page && page.equals("favorite_list")) {
+			mav = new ModelAndView("redirect:/FavoriteController/favoriteListController");
+		}
+		else {
+			mav = new ModelAndView("");
 		}
 		return mav;
 	}

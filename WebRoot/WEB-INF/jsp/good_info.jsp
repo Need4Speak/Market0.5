@@ -93,12 +93,12 @@
                     <c:when test="${userName != null}">
                         <c:choose>
                             <c:when test="${favorite == null}">
-                                <form action="collectController?goodId=${good.goodId}" method="post">
+                                <form action="${webroot}/FavoriteController/favoriteController?goodId=${good.goodId}" method="post">
                                     <input type="submit" class="btn btn-default btn-block active btn-danger" value="收藏">
                                 </form>
                             </c:when>
                             <c:otherwise>
-                                <form action="favoriteCancelController/${favorite.favoriteId}?page=good_info" method="post">
+                                <form action="${webroot}/FavoriteController/favoriteCancelController/${favorite.favoriteId}?page=good_info" method="post">
                                     <% request.setAttribute("page", "good_info"); %>
                                         <input type="submit" class="btn btn-default btn-block active btn-danger" value="取消收藏">
                                 </form>
@@ -106,7 +106,7 @@
                         </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <form action="loginBarController" method="post">
+                        <form action="${webroot}/UserLogController/loginBarController" method="post">
                             <input type="submit" class="btn btn-default btn-block active btn-danger" value="登录后收藏">
                         </form>
                     </c:otherwise>
