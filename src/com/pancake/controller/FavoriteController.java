@@ -3,6 +3,7 @@ package com.pancake.controller;
 import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -44,29 +45,43 @@ public class FavoriteController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			mav = new ModelAndView("redirect:/UserLogController/loginBarController");
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/favoriteCancelController/{favoriteId}")
-	public ModelAndView favoriteCancel(Model model, @PathVariable Long favoriteId, HttpServletRequest  request) {
+	public ModelAndView favoriteCancel(Model model, @PathVariable Long favoriteId, HttpServletRequest request) {
 		// 根据favoriteId，直接从数据库中删除 favorite。
 		Favorite favorite = fs.getById(favoriteId);
 		fs.delete(favorite);
 		String page = request.getParameter("page");
 		ModelAndView mav = null;
-		if(null != page && page.equals("good_info")){
-			mav = new ModelAndView("redirect:/GoodController/goodInfoController?goodId=" + favorite.getGood().getGoodId());
-		}
-		else if (null != page && page.equals("favorite_list")) {
+		if (null != page && page.equals("good_info")) {
+			mav = new ModelAndView(
+					"redirect:/GoodController/goodInfoController?goodId=" + favorite.getGood().getGoodId());
+		} else if (null != page && page.equals("favorite_list")) {
 			mav = new ModelAndView("redirect:/FavoriteController/favoriteListController");
-		}
-		else {
+		} else {
 			mav = new ModelAndView("");
 		}
 		return mav;
+	}
+
+	@RequestMapping(value = "/addFavoriteController")
+	public String addFavorite(HttpServletRequest request) {
+		logger.info("addFavoriteController called");
+
+		Long goodId = Long.valueOf(request.getParameter("goodId"));
+		String buyerName = (String) request.getSession().getAttribute("userName");
+
+		try {
+			fs.createFavorite(buyerName, goodId);
+			logger.info("Create collection successfully.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/GoodController/goodInfoController?goodId=" + goodId;
 	}
 }

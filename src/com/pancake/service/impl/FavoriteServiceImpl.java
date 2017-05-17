@@ -8,14 +8,17 @@
 */
 package com.pancake.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.pancake.dao.impl.FavoriteDaoImpl;
+import com.pancake.dao.impl.GoodDaoImpl;
 import com.pancake.dao.impl.UserDaoImpl;
 import com.pancake.entity.Favorite;
+import com.pancake.entity.Good;
 import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.service.FavoriteService;
@@ -32,6 +35,19 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	private FavoriteDaoImpl fdi = new FavoriteDaoImpl();
 	private UserDaoImpl udi = new UserDaoImpl();
+	private GoodDaoImpl gdi = new GoodDaoImpl();
+
+	@Override
+	public void createFavorite(String buyerName, Long goodId) {
+		Good good = gdi.findById(goodId);
+		// buyerName 唯一
+		User buyer = (User) udi.findByUserName(buyerName).get(0);
+		User seller = good.getUserByOwnerId();
+		Timestamp creationTime = new Timestamp(System.currentTimeMillis());
+		String description = "test";
+		Favorite favorite = new Favorite(buyer, good, seller, creationTime, description);
+		fdi.save(favorite);
+	}
 
 	@Override
 	public void delete(Favorite favorite) {

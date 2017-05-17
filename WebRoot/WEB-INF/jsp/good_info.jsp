@@ -93,7 +93,7 @@
                     <c:when test="${userName != null}">
                         <c:choose>
                             <c:when test="${favorite == null}">
-                                <form action="${webroot}/FavoriteController/favoriteController?goodId=${good.goodId}" method="post">
+                                <form action="${webroot}/FavoriteController/addFavoriteController?goodId=${good.goodId}" method="post">
                                     <input type="submit" class="btn btn-default btn-block active btn-danger" value="收藏">
                                 </form>
                             </c:when>

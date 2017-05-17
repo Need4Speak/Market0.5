@@ -20,6 +20,7 @@ import com.pancake.entity.User;
 *
 */
 public interface FavoriteService {
+	public void createFavorite(String buyerName, Long goodId);
 	public void delete(Favorite favorite);
 	public Favorite getById(java.lang.Long id);
 	public Favorite getFavByGoodAndBuyer(Long goodId, User buyer);
