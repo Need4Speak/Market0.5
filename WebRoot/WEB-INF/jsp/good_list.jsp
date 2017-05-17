@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +12,7 @@
     <title>我的发布</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="${webroot}/css/main.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     
     button {
@@ -34,7 +35,7 @@
                     <div class="row clearfix divcss5">
                         <div class="col-xs-4 column">
                             <c:set var="first_pic" value="${fn:split(good.pictures, ', ')[0]}" />
-                            <img src="images/${good.user.userName}/goodPics/${first_pic}" class="img-rounded imgcss5">
+                            <img src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${first_pic}" class="img-rounded imgcss5">
                         </div>
                         <div class="col-xs-4 column">
                             <div class="div-heighthalf">
@@ -52,12 +53,12 @@
                         <div class="col-xs-4 column">
                             <div class="div-heighthalf">
                                 <p class="text-right center-vertical price">
-                                    <button type="button" class="btn btn-default btn-sm" onclick="{location.href='goodEditController?goodId=${good.goodId}'}">编辑</button>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="{location.href='${webroot}/goodEditController?goodId=${good.goodId}'}">编辑</button>
                                 </p>
                             </div>
                             <div class="div-heighthalf">
                                 <p class="text-right center-vertical">
-                                    <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='goodDeleteController/${good.goodId}'}">删除</button>
+                                    <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='${webroot}/goodDeleteController/${good.goodId}'}">删除</button>
                                 </p>
                             </div>
                         </div>
@@ -70,12 +71,12 @@
                 </div>
                 <div class="col-xs-12 column">
                     <div class="btn-group btn-group-md">
-                        <button class="btn btn-default" type="button" onclick="{location.href='goodListController?pageNo=${page.topPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='sellerGoodListController?pageNo=${page.topPageNo}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 首页
                         </button>
                         <c:choose>
                             <c:when test="${page.pageNo!=1}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='goodListController?pageNo=${page.previousPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='sellerGoodListController?pageNo=${page.previousPageNo}'}">
                                     <em class="glyphicon glyphicon-align-left"></em> 上一页
                                 </button>
                             </c:when>
@@ -87,7 +88,7 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${page.pageNo != page.totalPages}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='goodListController?pageNo=${page.nextPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='sellerGoodListController?pageNo=${page.nextPageNo}'}">
                                     <em class="glyphicon glyphicon-align-right"></em> 下一页
                                 </button>
                             </c:when>
@@ -97,7 +98,7 @@
                                 </button>
                             </c:otherwise>
                         </c:choose>
-                        <button class="btn btn-default" type="button" onclick="{location.href='goodListController?pageNo=${page.bottomPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='sellerGoodListController?pageNo=${page.bottomPageNo}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 尾页
                         </button>
                     </div>

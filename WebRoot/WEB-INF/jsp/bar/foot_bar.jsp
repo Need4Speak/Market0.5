@@ -64,12 +64,12 @@ a {
                         </td>
                         <td class="tdcenter" style="width: 20%;">
                             <div>
-                                <a href="goodInputController"><img class="foot_img aligncenter" alt="发布" src="${webroot}/images/plus.png" /></a>
+                                <a href="${webroot}/GoodController/goodAddController"><img class="foot_img aligncenter" alt="发布" src="${webroot}/images/plus.png" /></a>
                             </div>
                         </td>
                         <td class="tdcenter" style="width: 20%;">
                             <div>
-                                <a href="goodListController"><img class="foot_img aligncenter" alt="所有发布" src="${webroot}/images/product_list.png" /></a>
+                                <a href="${webroot}/GoodController/sellerGoodListController"><img class="foot_img aligncenter" alt="所有发布" src="${webroot}/images/product_list.png" /></a>
                             </div>
                         </td>
                         <td class="tdcenter" style="width: 20%;">

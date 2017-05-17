@@ -47,6 +47,42 @@ public class Good implements java.io.Serializable {
 		this.addTime = addTime;
 	}
 
+	public Good(Classification classification, String name, Double price, String pictures, Timestamp addTime, User userByOwnerId) {
+		this.classification = classification;
+		this.name = name;
+		this.price = price;
+		this.pictures = pictures;
+		this.addTime = addTime;
+		this.userByOwnerId = userByOwnerId;
+	}
+	
+	public Good(Classification classification, String name, Double price, String pictures, Timestamp addTime, User userByOwnerId, Integer status, Double freight) {
+		this.classification = classification;
+		this.name = name;
+		this.price = price;
+		this.pictures = pictures;
+		this.addTime = addTime;
+		this.userByOwnerId = userByOwnerId;
+		this.status = status;
+		this.freight = freight;
+	}
+	
+	
+	public Good(User userByOwnerId, Classification classification, String name, Double price,
+			String pictures, Double freight, String description, Integer status, Timestamp addTime) {
+		super();
+		this.goodId = goodId;
+		this.userByOwnerId = userByOwnerId;
+		this.classification = classification;
+		this.name = name;
+		this.price = price;
+		this.pictures = pictures;
+		this.freight = freight;
+		this.description = description;
+		this.status = status;
+		this.addTime = addTime;
+	}
+
 	/** full constructor */
 	public Good(User userByOwnerId, Classification classification, User userByDelUserId, String name, Double price,
 			String pictures, Double freight, String description, Integer status, Timestamp addTime, Timestamp delTime,

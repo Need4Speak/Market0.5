@@ -43,7 +43,7 @@ public class GoodDaoImpl implements GoodDao {
 		List<Good> entitylist = null;
 		try {
 			Session session = HibernateSessionFactory.getSession();
-			Query query = session.createQuery("from Good where user = ? and status != 0 order by add_time desc");
+			Query query = session.createQuery("from Good where userByOwnerId = ? and status != 0 order by add_time desc");
 			query.setParameter(0, user);
 			query.setFirstResult(offset);
 			query.setMaxResults(length);
@@ -58,7 +58,7 @@ public class GoodDaoImpl implements GoodDao {
 
 	@Override
 	public List findByUser(User user) {
-		return findByProperty("user", user);
+		return findByProperty("userByOwnerId", user);
 	}
 
 	@Override
@@ -166,9 +166,10 @@ public class GoodDaoImpl implements GoodDao {
 			String queryString = "from Good as model where model." + propertyName + "= ?";
 			Query queryObject = session.createQuery(queryString);
 			queryObject.setParameter(0, value);
+			List list = queryObject.list();
 			transaction.commit();
 			HibernateSessionFactory.closeSession();
-			return queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;

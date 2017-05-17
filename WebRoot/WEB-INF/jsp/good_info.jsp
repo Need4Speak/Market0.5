@@ -111,7 +111,6 @@
                         </form>
                     </c:otherwise>
                 </c:choose>
-                </form>
             </div>
         </div>
         <%@ include file="bar/foot_bar.jsp"%>

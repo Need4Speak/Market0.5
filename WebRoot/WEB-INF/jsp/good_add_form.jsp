@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +12,7 @@
     <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <link href="main.css" rel="stylesheet" type="text/css"/>
+    <link href="${webroot}/css/main.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">    
     input {
         border-width: 0px;
@@ -42,7 +43,7 @@
 <body>
     <div class="container">
         <%@ include file="bar/categories_bar.jsp"%>
-            <form:form commandName="good" action="good_save" method="post" enctype="multipart/form-data">
+            <form:form commandName="good" action="${webroot}/GoodController/goodSaveController" method="post" enctype="multipart/form-data">
                 <div class="row clearfix" style="margin-top: 50px;">
                     <div class="col-md-12 column">
                         <form:input id="name" path="name" type="text" name="head" placeholder="标题 品类品牌型号都是买家喜欢搜索的" />
