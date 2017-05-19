@@ -113,6 +113,32 @@
                 </c:choose>
             </div>
         </div>
+        <hr>
+        <div class="row clearfix">
+        	<div class="col-xs-4 column">
+				<img alt="140x140" src="v3/default3.jpg" class="img-rounded head" />
+			</div>
+			<div class="col-xs-8 column">
+				<p  class="text-left">
+					留言1
+				</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row clearfix">
+			<div class="col-xs-12 column">
+				<form role="form" action="${webroot}/LeaveWordsController/addLeaveWordsController" method="post">
+				  <div class="form-group">
+				    <label for="name">留言</label>
+				    <input name="goodId" value="${good.goodId}" type="hidden" />
+				    <textarea name="message" class="form-control" rows="3"></textarea>
+				    <br>
+				    <input type="submit" class="btn btn-default btn-block active btn-danger" value="提交">
+				  </div>
+				</form>
+			</div>
+		</div>
+		
         <%@ include file="bar/foot_bar.jsp"%>
     </div>  
 </body>

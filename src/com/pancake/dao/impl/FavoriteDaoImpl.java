@@ -8,10 +8,10 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.pancake.dao.FavoriteDao;
 import com.pancake.entity.Favorite;
-import com.pancake.entity.Page;
 import com.pancake.util.HibernateSessionFactory;
 
 /**
@@ -25,6 +25,7 @@ import com.pancake.util.HibernateSessionFactory;
  * @see com.pancake.entity.Favorite
  * @author MyEclipse Persistence Tools
  */
+@Repository
 public class FavoriteDaoImpl implements FavoriteDao {
 	private static final Logger log = LoggerFactory.getLogger(FavoriteDaoImpl.class);
 	// property constants

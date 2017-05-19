@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.pancake.dao.ClassificationDao;
 import com.pancake.entity.Classification;
@@ -24,6 +25,7 @@ import com.pancake.util.HibernateSessionFactory;
  * @see com.pancake.entity.Classification
  * @author MyEclipse Persistence Tools
  */
+@Repository
 public class ClassificationDaoImpl implements ClassificationDao {
 	private static final Logger log = LoggerFactory.getLogger(ClassificationDaoImpl.class);
 	// property constants

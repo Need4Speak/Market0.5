@@ -78,7 +78,7 @@ public class GoodController {
 	}
 	
 	@RequestMapping(value = "/goodInfoController")
-	public ModelAndView goodInfo(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView goodInfo(HttpServletRequest request) {
 		// 获取 ID 为 goodId 的商品，及其是否被 session 中登录的用户收藏。
 		logger.info("goodInfoController called");
 		ModelAndView mav = null;

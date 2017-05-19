@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.pancake.dao.LeaveWordsDao;
 import com.pancake.entity.LeaveWords;
@@ -25,6 +26,7 @@ import com.pancake.util.HibernateSessionFactory;
  * @see com.pancake.entity.LeaveWords
  * @author MyEclipse Persistence Tools
  */
+@Repository
 public class LeaveWordsDaoImpl implements LeaveWordsDao{
 	private static final Logger log = LoggerFactory.getLogger(LeaveWordsDaoImpl.class);
 	// property constants
