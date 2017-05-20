@@ -9,14 +9,14 @@
 package com.pancake.service.impl;
 
 import java.sql.Timestamp;
-import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pancake.dao.impl.FavoriteDaoImpl;
-import com.pancake.dao.impl.GoodDaoImpl;
-import com.pancake.dao.impl.UserDaoImpl;
+import com.pancake.dao.FavoriteDao;
+import com.pancake.dao.GoodDao;
+import com.pancake.dao.UserDao;
 import com.pancake.entity.Favorite;
 import com.pancake.entity.Good;
 import com.pancake.entity.Page;
@@ -32,38 +32,40 @@ import com.pancake.service.FavoriteService;
  */
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
-
-	private FavoriteDaoImpl fdi = new FavoriteDaoImpl();
-	private UserDaoImpl udi = new UserDaoImpl();
-	private GoodDaoImpl gdi = new GoodDaoImpl();
+	@Autowired
+	private FavoriteDao fd;
+	@Autowired
+	private UserDao ud;
+	@Autowired
+	private GoodDao gd;
 
 	@Override
 	public void createFavorite(String buyerName, Long goodId) {
-		Good good = gdi.findById(goodId);
+		Good good = gd.findById(goodId);
 		// buyerName 唯一
-		User buyer = (User) udi.findByUserName(buyerName).get(0);
+		User buyer = (User) ud.findByUserName(buyerName).get(0);
 		User seller = good.getUserByOwnerId();
 		Timestamp creationTime = new Timestamp(System.currentTimeMillis());
 		String description = "test";
 		Favorite favorite = new Favorite(buyer, good, seller, creationTime, description);
-		fdi.save(favorite);
+		fd.save(favorite);
 	}
 
 	@Override
 	public void delete(Favorite favorite) {
-		fdi.delete(favorite);
+		fd.delete(favorite);
 
 	}
 
 	@Override
 	public Favorite getById(Long id) {
-		return fdi.findById(id);
+		return fd.findById(id);
 	}
 
 	@Override
 	public Favorite getFavByGoodAndBuyer(Long goodId, User buyer) {
 		// 根据商品和用户来查询相应的收藏信息，如果不存在，则返回 null。
-		List<Favorite> favorites = fdi.findByBuyer(buyer);
+		List<Favorite> favorites = fd.findByBuyer(buyer);
 		Favorite favorite = null;
 		for (Favorite eachFavorite : favorites) {
 			if (goodId == eachFavorite.getGood().getGoodId()) {
@@ -81,11 +83,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 		int offset = page.countOffset(currentPage, pageSize);
 
 		// findByUserName 返回值是list，但数据库中有唯一值约束，用户名唯一
-		User user = (User) udi.findByUserName(userName).get(0);
+		User user = (User) ud.findByUserName(userName).get(0);
 		// 分页查询结果集
-		List<Favorite> list = fdi.FindUserFavsWithPage(offset, pageSize, user);
+		List<Favorite> list = fd.FindUserFavsWithPage(offset, pageSize, user);
 		// 总记录数
-		List<Favorite> collections = fdi.findByBuyer(user);
+		List<Favorite> collections = fd.findByBuyer(user);
 		int allRow = collections.size();
 
 		page.setPageNo(currentPage);

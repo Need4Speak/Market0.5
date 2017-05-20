@@ -13,15 +13,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pancake.dao.impl.GoodDaoImpl;
+import com.pancake.dao.GoodDao;
 import com.pancake.entity.Classification;
 import com.pancake.entity.Good;
 import com.pancake.entity.GoodWithImage;
 import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.service.GoodService;
+import com.pancake.service.UserService;
 
 /**
  * @ClassName: GoodServiceImpl
@@ -32,8 +34,10 @@ import com.pancake.service.GoodService;
  */
 @Service
 public class GoodServiceImpl implements GoodService {
-	private GoodDaoImpl gdi = new GoodDaoImpl();
-	private UserServiceImpl usi = new UserServiceImpl();
+	@Autowired
+	private GoodDao gd;
+	@Autowired
+	private UserService us;
 
 	@Override
 	public Page<Good> getAllGoodsWithPage(int currentPage, int pageSize) {
@@ -41,10 +45,10 @@ public class GoodServiceImpl implements GoodService {
 		// 当前页开始记录
 		int offset = page.countOffset(currentPage, pageSize);
 		// 分页查询结果集
-		List<Good> list = gdi.findAllGoodsWithPage(offset, pageSize);
+		List<Good> list = gd.findAllGoodsWithPage(offset, pageSize);
 		// 总记录数
 		ArrayList<Good> goodsList = null;
-		goodsList = (ArrayList<Good>) gdi.findAllByAddTime();
+		goodsList = (ArrayList<Good>) gd.findAllByAddTime();
 
 		// Remove good in goodsList whose status is 0. 0 means this good can not
 		// buy.
@@ -72,9 +76,9 @@ public class GoodServiceImpl implements GoodService {
 		int offset = page.countOffset(currentPage, pageSize);
 
 		// 分页查询结果集
-		List<Good> list = gdi.queryGoodWithPage(offset, pageSize, usi.getByName(userName));
+		List<Good> list = gd.queryGoodWithPage(offset, pageSize, us.getByName(userName));
 		// 总记录数
-		ArrayList<Good> goodsList = (ArrayList<Good>) gdi.findByUser(usi.getByName(userName));
+		ArrayList<Good> goodsList = (ArrayList<Good>) gd.findByUser(us.getByName(userName));
 		// ArrayList<Good> goodsList = null;
 		//// int classificationId = -1;
 		// if (classificationId == -1) {
@@ -106,7 +110,7 @@ public class GoodServiceImpl implements GoodService {
 
 	@Override
 	public Good getById(Long id) {
-		return gdi.findById(id);
+		return gd.findById(id);
 	}
 
 	@Override
@@ -122,7 +126,7 @@ public class GoodServiceImpl implements GoodService {
 		Integer status = 1;
 		Timestamp addTime = new Timestamp(System.currentTimeMillis());
 		Good tempGood = new Good(userByOwnerId, classification, name, price, pictures, freight, description, status, addTime);
-		gdi.save(tempGood);
+		gd.save(tempGood);
 	}
 
 }
