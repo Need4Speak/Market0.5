@@ -74,7 +74,7 @@ a {
                         </td>
                         <td class="tdcenter" style="width: 20%;">
                             <div>
-                                <a href="userInfoController"><img class="foot_img aligncenter" alt="个人" src="${webroot}/images/me.png" /></a>
+                                <a href="${webroot}/UserController/userInfoController"><img class="foot_img aligncenter" alt="个人" src="${webroot}/images/me.png" /></a>
                             </div>
                         </td>
                     </tr>

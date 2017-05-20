@@ -36,11 +36,19 @@ public class LeaveWordsController {
 
 	@RequestMapping(value = "/addLeaveWordsController")
 	public String addLeaveWords(HttpSession session, HttpServletRequest request) {
+		
 		logger.info("addLeaveWordsController called");
 		String userName = (String) session.getAttribute("userName");
-		String message = request.getParameter("message");
 		Long goodId = Long.valueOf(request.getParameter("goodId"));
-		lws.addLeaveWords(userName, message, goodId);
-		return "redirect:/GoodController/goodInfoController?goodId=" + goodId;
+		if (userName != null) {
+			String message = request.getParameter("message");
+			lws.addLeaveWords(userName, message, goodId);
+			return "redirect:/GoodController/goodInfoController?goodId=" + goodId;
+		}
+		else {
+			logger.info("User doesn't login!");
+			return "redirect:/UserLogController/loginBarController?page=good_info&goodId=" + goodId;
+		}
+
 	}
 }

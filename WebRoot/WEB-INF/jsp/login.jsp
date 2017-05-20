@@ -40,7 +40,7 @@
                 <img alt="140x140" src="${webroot}/images/system/head.jpg" class="img-circle" />
             </div>
         </div>
-        <form action="loginController" method="post">
+        <form action="loginController?page=${requestScope.page}&goodId=${requestScope.goodId}" method="post">
 	        <div class="row clearfix">
 	            <div class="col-md-2 column">
 	                <p>账号</p>

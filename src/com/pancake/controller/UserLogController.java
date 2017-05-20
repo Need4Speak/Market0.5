@@ -20,9 +20,16 @@ public class UserLogController {
 	private UserLogService uls;
 	
 	@RequestMapping(value = "/loginBarController")
-	public String loginBar() {
+	public String loginBar(HttpServletRequest request) {
 		logger.info("loginBarController called");
-
+		String page = request.getParameter("page");
+		// 判断页面是否来自 goodinfo.jsp
+		if (null!=page && page.equals("good_info")) {
+			String goodId = request.getParameter("goodId");
+			request.setAttribute("page", page);
+			request.setAttribute("goodId", goodId);
+			
+		}
 		return "login";
 	}
 
@@ -37,8 +44,15 @@ public class UserLogController {
 		boolean loginCondition = uls.compareLoginInfo(userName, password);
 
 		if (loginCondition) {
+			String page = request.getParameter("page");
 			request.getSession().setAttribute("userName", userName);
-			return "redirect:/GoodController/IndexController";
+			if (null != page && page.equals("good_info")) {
+				String goodId = request.getParameter("goodId");
+				return "redirect:/GoodController/goodInfoController?goodId=" + goodId;
+			}
+			else {
+				return "redirect:/GoodController/IndexController";
+			}
 		} else {
 			return "loginFail";
 		}

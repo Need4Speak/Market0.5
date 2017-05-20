@@ -8,6 +8,10 @@
 */
 package com.pancake.service;
 
+import java.util.List;
+
+import com.pancake.entity.LeaveWords;
+
 /**
 * @ClassName: LeaveWords
 * @Description: TODO(这里用一句话描述这个类的作用)
@@ -17,4 +21,5 @@ package com.pancake.service;
 */
 public interface LeaveWordsService {
 	public void addLeaveWords(String userName, String message, Long goodId);
+	public List<LeaveWords> getByGoodId(Long goodId);
 }

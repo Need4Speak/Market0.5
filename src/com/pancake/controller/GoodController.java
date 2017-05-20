@@ -27,11 +27,13 @@ import com.pancake.entity.Classification;
 import com.pancake.entity.Favorite;
 import com.pancake.entity.Good;
 import com.pancake.entity.GoodWithImage;
+import com.pancake.entity.LeaveWords;
 import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.service.ClassificationService;
 import com.pancake.service.FavoriteService;
 import com.pancake.service.GoodService;
+import com.pancake.service.LeaveWordsService;
 import com.pancake.service.UserService;
 import com.pancake.util.ImageProcess;
 import com.pancake.util.PicFormatProcess;
@@ -52,10 +54,12 @@ public class GoodController {
 	private GoodService gs;
 	@Autowired
 	private UserService us;
-	@Autowired 
+	@Autowired
 	private FavoriteService fs;
-	@Autowired 
-	private ClassificationService cs; 
+	@Autowired
+	private ClassificationService cs;
+	@Autowired
+	private LeaveWordsService lws;
 
 	@RequestMapping(value = "/IndexController")
 	public ModelAndView findAllGood(HttpServletRequest request, HttpServletResponse response) {
@@ -76,7 +80,7 @@ public class GoodController {
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/goodInfoController")
 	public ModelAndView goodInfo(HttpServletRequest request) {
 		// 获取 ID 为 goodId 的商品，及其是否被 session 中登录的用户收藏。
@@ -101,7 +105,17 @@ public class GoodController {
 		} else {
 			mav = new ModelAndView("good_not_ready");
 		}
+		
+		//获取商品留言列表
+		List<LeaveWords> list = lws.getByGoodId(goodId);
+		mav.addObject("LeaveWordsList", list);
 		return mav;
+	}
+
+	public List<LeaveWords> getGoodLeaveWords(Long goodId) {
+		List<LeaveWords> list = lws.getByGoodId(goodId);
+		return list;
+
 	}
 
 	@RequestMapping(value = "/goodAddController")
@@ -111,13 +125,12 @@ public class GoodController {
 		if (null != userName) {
 			model.addAttribute("good", new Good());
 			return "good_add_form";
-		}
-		else {
+		} else {
 			return "redirect:/UserLogController/loginBarController";
 		}
-		
+
 	}
-	
+
 	@RequestMapping(value = "/goodSaveController")
 	public String saveGood(@ModelAttribute GoodWithImage good, HttpSession session, HttpServletRequest request) {
 		logger.info("save Good called");
@@ -128,16 +141,16 @@ public class GoodController {
 		// 存储图片到image下
 		List<String> picList = ImageProcess.storeImage(good, session, request);
 		String picString = PicFormatProcess.ListToStr(picList);
-		
+
 		good.setUser(us.getByName(userName));
 		good.setClassification(cs.getClassificationById(classificationId));
 		// 1 means the good can be selled, by default status=1.
 		good.setStatus(1);
 		gs.saveGood(good, picString);
-		
+
 		return "redirect:/GoodController/sellerGoodListController";
 	}
-	
+
 	@RequestMapping(value = "/sellerGoodListController")
 	public String goodList(Model model, HttpSession session, HttpServletRequest request) {
 		String userName = ((String) session.getAttribute("userName"));
@@ -157,10 +170,9 @@ public class GoodController {
 				e.printStackTrace();
 			}
 			return "good_list";
-		}
-		else {
+		} else {
 			return "redirect:/UserLogController/loginBarController";
 		}
-		
+
 	}
 }

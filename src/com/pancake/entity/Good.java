@@ -107,9 +107,7 @@ public class Good implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Good [goodId=" + goodId + ", userByOwnerId=" + userByOwnerId + ", classification=" + classification
-				+ ", userByDelUserId=" + userByDelUserId + ", name=" + name + ", price=" + price + ", status=" + status
-				+ ", addTime=" + addTime + ", leaveWordses=" + leaveWordses + ", favorites=" + favorites + "]";
+		return "Good name: " + this.name;
 	}
 
 	public Long getGoodId() {

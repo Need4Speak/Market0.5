@@ -114,16 +114,21 @@
             </div>
         </div>
         <hr>
-        <div class="row clearfix">
-        	<div class="col-xs-4 column">
-				<img alt="140x140" src="v3/default3.jpg" class="img-rounded head" />
-			</div>
-			<div class="col-xs-8 column">
-				<p  class="text-left">
-					留言1
-				</p>
-			</div>
-		</div>
+        <c:if test="${LeaveWordsList != null}">
+	        <c:forEach items="${LeaveWordsList}" var="LeaveWords">
+		        <div class="row clearfix">
+		        	<div class="col-xs-4 column">
+						<img alt="140x140" src="${webroot}/images/${LeaveWords.user.userName}/head/${LeaveWords.user.userPhoto}" class="img-rounded head" />
+					</div>
+					<div class="col-xs-8 column">
+						<p  class="text-left">
+							${LeaveWords.content}
+						</p>
+					</div>
+				</div>
+				<hr style="height:1px;border:none;border-top:1px dashed #0066CC;">
+			</c:forEach>
+		</c:if>
 		<hr>
 		<div class="row clearfix">
 			<div class="col-xs-12 column">

@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*"
 	contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 
@@ -38,7 +40,7 @@
 <body>
     <div class="container">
         <%@ include file="bar/categories_bar.jsp"%>
-            <form action="userUpdateController" method="post" enctype="multipart/form-data">
+            <form action="${webroot}/UserController/userUpdateController" method="post" enctype="multipart/form-data">
                 <div class="row clearfix">
                     <div class="col-xs-12 column">
                         <input type="hidden" name="userId" value="${user.userId}">
@@ -63,7 +65,7 @@
                 <div class="row clearfix ">
                     <div class="col-xs-12 column ">
                         <span class="contact ">联系方式</span>
-                        <input type="text" name="phoneNumber" value="${user.phoneNumber}">
+                        <input type="text" name="phoneNumber" value="${user.phone}">
                     </div>
                 </div>
                 <hr />
@@ -80,7 +82,7 @@
                             <button type="submit" class="btn btn-success btn-lg btn-block active">确认修改</button>
                         </div>
                         <div class="col-xs-6 column" style="margin-bottom: 50px;">
-                            <button type="button" class="btn btn-danger btn-lg btn-block active" onclick="{location.href='logoutController?userName=${userNameInSession}'}">注 销
+                            <button type="button" class="btn btn-danger btn-lg btn-block active" onclick="{location.href='${webroot}/UserLogController/logoutController?userName=${userNameInSession}'}">注 销
                             </button>
                         </div>
                     </div>

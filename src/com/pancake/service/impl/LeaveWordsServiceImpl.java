@@ -8,6 +8,8 @@
 */
 package com.pancake.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +45,10 @@ public class LeaveWordsServiceImpl implements LeaveWordsService {
 		lwd.save(leaveWords);
 	}
 
+	@Override
+	public List<LeaveWords> getByGoodId(Long goodId) {
+		Good good = gd.findById(goodId);
+		List<LeaveWords> list = lwd.findByProperty("good", good);
+		return list;
+	}
 }
