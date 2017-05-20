@@ -44,7 +44,7 @@
                 <div class="row clearfix">
                     <div class="col-xs-12 column">
                         <input type="hidden" name="userId" value="${user.userId}">
-                        <span class="head">头像</span> <img src="images/${sessionScope.userName}/head/${user.userPhoto}" class="img-rounded usr-img">
+                        <span class="head">头像</span> <img src="${webroot}/images/${sessionScope.userName}/head/${user.userPhoto}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded usr-img">
                     </div>
                 </div>
                 <hr />

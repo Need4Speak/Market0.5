@@ -33,7 +33,7 @@
                     <div class="row clearfix divcss5">
                         <div class="col-xs-4 column aligncenter">
                             <div class="aligncenter">
-                                <img alt="140x140" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${fn:split(good.pictures, ', ')[0]}" class="img-rounded imgcss5" />
+                                <img alt="140x140" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${fn:split(good.pictures, ', ')[0]}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded imgcss5" />
                             </div>
                         </div>
                         <div class="col-xs-4 column ">

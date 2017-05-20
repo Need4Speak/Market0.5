@@ -58,7 +58,7 @@
     	<%@ include file="bar/categories_bar.jsp"%>
         <div class="row clearfix" style="margin-top: 50px;">
             <div class="col-xs-2 column">
-                <img class="head" src="${webroot}/images/${good.userByOwnerId.userName}/head/${good.userByOwnerId.userPhoto}" alt="我是头像">
+                <img class="head" src="${webroot}/images/${good.userByOwnerId.userName}/head/${good.userByOwnerId.userPhoto}" onerror="javascript:this.src='${webroot}/images/not-found.png'" alt="我是头像">
             </div>
             <div class="col-xs-5 column">
                 <p class="text-right">${good.userByOwnerId.userName}</p>
@@ -83,7 +83,7 @@
         <div class="row clearfix">
             <div class="col-xs-12 column">
                 <c:forEach items="${fn:split(good.pictures, ', ')}" var="picture">
-                    <img class="productphoto" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${picture}" alt="我是产品图片">
+                    <img class="productphoto" src="${webroot}/images/${good.userByOwnerId.userName}/goodPics/${picture}" onerror="javascript:this.src='${webroot}/images/not-found.png'" alt="我是产品图片">
                 </c:forEach>
             </div>
         </div>
@@ -118,7 +118,7 @@
 	        <c:forEach items="${LeaveWordsList}" var="LeaveWords">
 		        <div class="row clearfix">
 		        	<div class="col-xs-4 column">
-						<img alt="140x140" src="${webroot}/images/${LeaveWords.user.userName}/head/${LeaveWords.user.userPhoto}" class="img-rounded head" />
+						<img alt="140x140" src="${webroot}/images/${LeaveWords.user.userName}/head/${LeaveWords.user.userPhoto}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded head" />
 					</div>
 					<div class="col-xs-8 column">
 						<p  class="text-left">

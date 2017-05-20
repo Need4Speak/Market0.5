@@ -42,7 +42,7 @@
                 <div class="row clearfix divcss5">
                     <div class="col-xs-4 column">
                         <c:set var="first_pic" value="${fn:split(favorite.good.pictures, ', ')[0]}" />
-                        <img src="${webroot}/images/${favorite.userByBuyerId.userName}/goodPics/${first_pic}" class="img-rounded imgcss5">
+                        <img src="${webroot}/images/${favorite.userByBuyerId.userName}/goodPics/${first_pic}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded imgcss5">
                     </div>
                     <div class="col-xs-4 column">
                         <div class="div-heighthalf">
