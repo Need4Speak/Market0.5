@@ -53,7 +53,7 @@
                         <div class="col-xs-4 column">
                             <div class="div-heighthalf">
                                 <p class="text-right center-vertical price">
-                                    <button type="button" class="btn btn-default btn-sm" onclick="{location.href='${webroot}/goodEditController?goodId=${good.goodId}'}">编辑</button>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="{location.href='${webroot}/GoodController/goodEditController?goodId=${good.goodId}'}">编辑</button>
                                 </p>
                             </div>
                             <div class="div-heighthalf">

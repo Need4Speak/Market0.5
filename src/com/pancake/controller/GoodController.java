@@ -204,4 +204,49 @@ public class GoodController {
 		model.addAttribute("good", good);
 		return "redirect:/GoodController/sellerGoodListController";
 	}
+	
+	/**
+	 * 跳转到 good_edit_form.jsp 页面
+	 * @param model
+	 * @param request
+	 * @return good_edit_form.jsp
+	 */
+	@RequestMapping(value = "/goodEditController")
+	public String editGood(Model model, HttpServletRequest request) {
+		logger.info("goodEditController called");
+		Long goodId = Long.valueOf(request.getParameter("goodId"));
+		Good good = gs.getById(goodId);
+		model.addAttribute("good", good);
+		return "good_edit_form";
+	}
+	
+	/**
+	 * 根据从表单传过来的 good 来更新数据库中相应的good。
+	 * @param good
+	 * @param session
+	 * @param request
+	 * @return goodListController.jsp
+	 */
+	@RequestMapping(value = "/goodUpdateController")
+	public String updateGood(HttpSession session, HttpServletRequest request) {
+		// Don't no how to bound field "User user", use session temporary。
+		String userName = (String) session.getAttribute("userName");
+		Long goodId = Long.valueOf(request.getParameter("goodId"));	
+		String name = request.getParameter("name");
+		Double price = Double.valueOf(request.getParameter("price"));
+		String description = request.getParameter("description");
+		
+		Good good = gs.getById(goodId);
+		
+		if(userName == null || !userName.equals(good.getUserByOwnerId().getUserName())) {
+			return "non_privileged";
+		}
+		else {
+			good.setName(name);
+			good.setPrice(price);
+			good.setDescription(description);
+			gs.update(good);
+			return "redirect:/GoodController/sellerGoodListController";
+		}	
+	}
 }
