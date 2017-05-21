@@ -27,7 +27,7 @@
     }
     
     button {
-    	background-color: #A1251B;
+    	background-color: #D9534F;
         margin-top: 20px;
     }
     </style>
@@ -59,7 +59,7 @@
 	        </div>
 	        <div class="row clearfix">
 	            <div class="col-xs-12 column">
-	                <button type="submit" class="btn btn-default btn-block active btn-info" style="background: #d9534f;">登录</button>
+	                <button type="submit" class="btn btn-block active"><span style="color:#FFFFFF">登录</span></button>
 	            </div>
 	        </div>
         </form>
