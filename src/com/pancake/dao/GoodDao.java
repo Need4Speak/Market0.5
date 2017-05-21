@@ -34,6 +34,10 @@ public interface GoodDao {
 	
 	public List<Good> findAllGoodsWithPage(int offset, int length);
 	
+	public List findLikeByName(java.lang.String name, int offset, int size);
+	
+	public List findLikeByNameCount(java.lang.String name);
+	
 	public List findAllByAddTime();
 
 	public void save(Good transientInstance);

@@ -175,4 +175,20 @@ public class GoodController {
 		}
 
 	}
+	
+	@RequestMapping(value = "/goodSearchController")
+	public String goodSearch(Model model, HttpServletRequest request) {
+		logger.info("goodSearchController called");
+		String searchContent = request.getParameter("searchContent");
+		int pageNo = 1;
+		if (request.getParameter("pageNo") != null) {
+			pageNo = Integer.valueOf(request.getParameter("pageNo"));
+			logger.info("pageNo: " + pageNo);
+		}
+		int pageSize = 8;
+		Page page = gs.getLikeByName(searchContent, pageNo, pageSize);
+		model.addAttribute("page", page);
+		model.addAttribute("searchContent", searchContent);
+		return "search_result";
+	}
 }

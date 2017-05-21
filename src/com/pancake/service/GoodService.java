@@ -11,4 +11,5 @@ public interface GoodService {
     public Page<Good> getUserGoodsWithPage(int currentPage, int pageSize, int classificationId, String userName);
     public Good getById(Long id);
     public void saveGood(GoodWithImage good, String picString);
+    public Page<Good> getLikeByName(java.lang.String name, int offset, int size);
 }

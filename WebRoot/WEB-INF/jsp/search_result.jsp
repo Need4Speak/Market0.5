@@ -85,12 +85,12 @@
                 </div>
                 <div class="col-xs-12 column">
                     <div class="btn-group btn-group-md">
-                        <button class="btn btn-default" type="button" onclick="{location.href='IndexController?pageNo=${page.topPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='goodSearchController?pageNo=${page.topPageNo}&searchContent=${searchContent}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 首页
                         </button>
                         <c:choose>
                             <c:when test="${page.pageNo!=1}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='IndexController?pageNo=${page.previousPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='goodSearchController?pageNo=${page.previousPageNo}&searchContent=${searchContent}'}">
                                     <em class="glyphicon glyphicon-align-left"></em> 上一页
                                 </button>
                             </c:when>
@@ -102,7 +102,7 @@
                         </c:choose>
                         <c:choose>
                             <c:when test="${page.pageNo != page.totalPages}">
-                                <button class="btn btn-default" type="button" onclick="{location.href='IndexController?pageNo=${page.nextPageNo}'}">
+                                <button class="btn btn-default" type="button" onclick="{location.href='goodSearchController?pageNo=${page.nextPageNo}&searchContent=${searchContent}'}">
                                     <em class="glyphicon glyphicon-align-right"></em> 下一页
                                 </button>
                             </c:when>
@@ -112,7 +112,7 @@
                                 </button>
                             </c:otherwise>
                         </c:choose>
-                        <button class="btn btn-default" type="button" onclick="{location.href='IndexController?pageNo=${page.bottomPageNo}'}">
+                        <button class="btn btn-default" type="button" onclick="{location.href='goodSearchController?pageNo=${page.bottomPageNo}&searchContent=${searchContent}'}">
                             <em class="glyphicon glyphicon-align-justify"></em> 尾页
                         </button>
                     </div>

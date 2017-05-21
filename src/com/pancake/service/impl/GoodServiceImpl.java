@@ -50,16 +50,25 @@ public class GoodServiceImpl implements GoodService {
 		ArrayList<Good> goodsList = null;
 		goodsList = (ArrayList<Good>) gd.findAllByAddTime();
 
-		// Remove good in goodsList whose status is 0. 0 means this good can not
-		// buy.
-		Iterator<Good> iter = goodsList.iterator();
-		while (iter.hasNext()) {
-			Good good = iter.next();
-			if (0 == good.getStatus()) {
-				iter.remove();
-			}
-		}
 		int allRow = goodsList.size();
+
+		page.setPageNo(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalRecords(allRow);
+		page.setList(list);
+
+		return page;
+	}
+
+	@Override
+	public Page<Good> getLikeByName(String name, int currentPage, int pageSize) {
+		Page<Good> page = new Page<Good>();
+		// 当前页开始记录
+		int offset = page.countOffset(currentPage, pageSize);
+		// 分页查询结果集
+		List<Good> list = gd.findLikeByName(name, offset, pageSize);
+		// 总记录数
+		int allRow = gd.findLikeByNameCount(name).size();
 
 		page.setPageNo(currentPage);
 		page.setPageSize(pageSize);

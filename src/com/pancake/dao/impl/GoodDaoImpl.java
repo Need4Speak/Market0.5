@@ -45,11 +45,14 @@ public class GoodDaoImpl implements GoodDao {
 		List<Good> entitylist = null;
 		try {
 			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			Query query = session.createQuery("from Good where userByOwnerId = ? and status != 0 order by add_time desc");
 			query.setParameter(0, user);
 			query.setFirstResult(offset);
 			query.setMaxResults(length);
 			entitylist = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 
 		} catch (RuntimeException re) {
 			throw re;
@@ -68,10 +71,13 @@ public class GoodDaoImpl implements GoodDao {
 		List<Good> entitylist = null;
 		try {
 			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
 			Query query = session.createQuery("from Good where status != 0 order by add_time desc");
 			query.setFirstResult(offset);
 			query.setMaxResults(length);
 			entitylist = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
 
 		} catch (RuntimeException re) {
 			throw re;
@@ -79,8 +85,45 @@ public class GoodDaoImpl implements GoodDao {
 
 		return entitylist;
 	}
-
 	
+    public List findLikeByName(java.lang.String name, int offset, int size) {  
+        log.debug("根据商品名称模糊查询商品 " + name);  
+        try {  
+            name = "'%" + name + "%'";
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery(  
+                    "from Good where status != 0 and name like " + name + " order by add_time desc");  
+            query.setFirstResult(offset);  
+            query.setMaxResults(size);  
+			List list = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+            return list;  
+        } catch (RuntimeException re) {  
+            log.error("根据商品名称模糊查询商品出错!", re);  
+            throw re;  
+        }  
+    }  
+	
+    public List findLikeByNameCount(java.lang.String name) {  
+        log.debug("根据商品名称模糊查询商品 " + name);  
+        try {  
+            name = "'%" + name + "%'";
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery(  
+                    "from Good where status != 0 and name like " + name + " order by add_time desc");  
+			List list = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+            return list;  
+        } catch (RuntimeException re) {  
+            log.error("根据商品名称模糊查询商品出错!", re);  
+            throw re;  
+        }  
+    }
+    
 	@Override
 	public List findAllByAddTime() {
 		//log.debug("finding all Good instances");
