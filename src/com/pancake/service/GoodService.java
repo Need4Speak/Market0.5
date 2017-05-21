@@ -1,7 +1,5 @@
 package com.pancake.service;
 
-import java.util.List;
-
 import com.pancake.entity.Good;
 import com.pancake.entity.GoodWithImage;
 import com.pancake.entity.Page;
@@ -12,4 +10,5 @@ public interface GoodService {
     public Good getById(Long id);
     public void saveGood(GoodWithImage good, String picString);
     public Page<Good> getLikeByName(java.lang.String name, int offset, int size);
+    public void update(Good good);
 }

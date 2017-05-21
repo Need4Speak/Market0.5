@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -152,7 +153,7 @@ public class GoodController {
 	}
 
 	@RequestMapping(value = "/sellerGoodListController")
-	public String goodList(Model model, HttpSession session, HttpServletRequest request) {
+	public String sellerGoodList(Model model, HttpSession session, HttpServletRequest request) {
 		String userName = ((String) session.getAttribute("userName"));
 		if (null != userName) {
 			try {
@@ -190,5 +191,17 @@ public class GoodController {
 		model.addAttribute("page", page);
 		model.addAttribute("searchContent", searchContent);
 		return "search_result";
+	}
+	
+	@RequestMapping(value = "/goodDeleteController/{id}")
+	public String deleteGood(Model model, @PathVariable Long id) {
+		// 用户取消商品发布，并不删除，而是设 good 对象的 status 域为1.
+		logger.info("goodDeleteController called");
+		Good good = gs.getById(id);
+		// 0: can't buy. Don't delete the good info.
+		good.setStatus(0);
+		gs.update(good);
+		model.addAttribute("good", good);
+		return "redirect:/GoodController/sellerGoodListController";
 	}
 }

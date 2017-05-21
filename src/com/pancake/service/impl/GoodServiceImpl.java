@@ -39,6 +39,13 @@ public class GoodServiceImpl implements GoodService {
 	@Autowired
 	private UserService us;
 
+	
+	@Override
+	public void update(Good good) {
+		gd.merge(good);
+		
+	}
+
 	@Override
 	public Page<Good> getAllGoodsWithPage(int currentPage, int pageSize) {
 		Page<Good> page = new Page<Good>();

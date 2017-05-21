@@ -58,7 +58,7 @@
                             </div>
                             <div class="div-heighthalf">
                                 <p class="text-right center-vertical">
-                                    <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='${webroot}/goodDeleteController/${good.goodId}'}">删除</button>
+                                    <button type="button" class="btn btn-default btn-sm red" onclick="{location.href='${webroot}/GoodController/goodDeleteController/${good.goodId}'}">删除</button>
                                 </p>
                             </div>
                         </div>
