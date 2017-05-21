@@ -36,29 +36,29 @@
 <body>
     <div class="container">
         <div class="row clearfix">
-            <div class="col-md-12 column">
+            <div class="col-xs-12 column">
                 <img alt="140x140" src="${webroot}/images/system/head.jpg" class="img-circle" />
             </div>
         </div>
         <form action="loginController?page=${requestScope.page}&goodId=${requestScope.goodId}" method="post">
 	        <div class="row clearfix">
-	            <div class="col-md-2 column">
+	            <div class="col-xs-2 column">
 	                <p>账号</p>
 	            </div>
-	            <div class="col-md-10 column">
+	            <div class="col-xs-10 column">
 	                <input type="text" name="userName" placeholder="请输入账号">
 	            </div>
 	        </div>
 	        <div class="row clearfix">
-	            <div class="col-md-2 column">
+	            <div class="col-xs-2 column">
 	                <p>密码</p>
 	            </div>
-	            <div class="col-md-10 column">
+	            <div class="col-xs-10 column">
 	                <input type="password" name="password" placeholder="请输入密码">
 	            </div>
 	        </div>
 	        <div class="row clearfix">
-	            <div class="col-md-12 column">
+	            <div class="col-xs-12 column">
 	                <button type="submit" class="btn btn-default btn-block active btn-info" style="background: #d9534f;">登录</button>
 	            </div>
 	        </div>

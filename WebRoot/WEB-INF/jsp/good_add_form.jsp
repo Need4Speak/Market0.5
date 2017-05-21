@@ -45,26 +45,26 @@
         <%@ include file="bar/categories_bar.jsp"%>
             <form:form commandName="good" action="${webroot}/GoodController/goodSaveController" method="post" enctype="multipart/form-data">
                 <div class="row clearfix" style="margin-top: 50px;">
-                    <div class="col-md-12 column">
+                    <div class="col-xs-12 column">
                         <form:input id="name" path="name" type="text" name="head" placeholder="标题 品类品牌型号都是买家喜欢搜索的" />
                     </div>
                 </div>
                 <hr/>
                 <div class="row clearfix">
-                    <div class="col-md-12 column">
+                    <div class="col-xs-12 column">
                         <form:input id="description" path="description" type="text" name="description" placeholder="描述一下你的宝贝" />
                     </div>
                 </div>
                 <hr/>
                 <div class="row clearfix">
-                    <div class="col-md-12 column">
+                    <div class="col-xs-12 column">
                         <span class="word">价格</span>
                         <form:input id="price" path="price" class="right" type="text" name="price" placeholder="￥0" />
                     </div>
                 </div>
                 <hr/>
                 <div class="row clearfix">
-                    <div class="col-md-12 column">
+                    <div class="col-xs-12 column">
                         <span class="word">分类:</span>
                         <br>
                         <label>
@@ -83,7 +83,7 @@
                 </div>
                 <hr/>
                 <div class="row clearfix">
-                    <div class="col-md-12 column">
+                    <div class="col-xs-12 column">
                         <span class="word">图片1:</span>
                         <input type="file" name="pictures[0]" />
                         <br>
@@ -97,7 +97,7 @@
                 </div>
                 <hr/>
                 <div class="row clearfix">
-                    <div class="col-md-12 column" style="margin-bottom: 50px;">
+                    <div class="col-xs-12 column" style="margin-bottom: 50px;">
                         <input type="submit" class="btn btn-default btn-block active btn-danger" value="发布商品">
                     </div>
                 </div>
