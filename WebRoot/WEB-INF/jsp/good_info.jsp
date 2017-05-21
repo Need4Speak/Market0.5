@@ -114,21 +114,30 @@
             </div>
         </div>
         <hr>
-        <c:if test="${LeaveWordsList != null}">
-	        <c:forEach items="${LeaveWordsList}" var="LeaveWords">
-		        <div class="row clearfix">
-		        	<div class="col-xs-4 column">
-						<img alt="140x140" src="${webroot}/images/${LeaveWords.user.userName}/head/${LeaveWords.user.userPhoto}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded head" />
+        <c:choose>
+	        <c:when test="${LeaveWordsList != null && 0 != fn:length(LeaveWordsList)}">  
+		        <c:forEach items="${LeaveWordsList}" var="LeaveWords">
+			        <div class="row clearfix">
+			        	<div class="col-xs-4 column">
+							<img alt="140x140" src="${webroot}/images/${LeaveWords.user.userName}/head/${LeaveWords.user.userPhoto}" onerror="javascript:this.src='${webroot}/images/not-found.png'" class="img-rounded head" />
+						</div>
+						<div class="col-xs-8 column">
+							<p  class="text-left">
+								${LeaveWords.content}
+							</p>
+						</div>
 					</div>
-					<div class="col-xs-8 column">
-						<p  class="text-left">
-							${LeaveWords.content}
-						</p>
+					<hr style="height:1px;border:none;border-top:1px dashed #0066CC;">
+				</c:forEach>
+			</c:when>
+			<c:otherwise> 
+				<div class="row clearfix">
+					<div class="col-xs-12 column">
+						<p  class="text-left">还没有留言，快来抢沙发吧&nbsp &nbsp &nbsp &nbsp~(@^_^@)~</p>
 					</div>
 				</div>
-				<hr style="height:1px;border:none;border-top:1px dashed #0066CC;">
-			</c:forEach>
-		</c:if>
+			</c:otherwise>
+		</c:choose>
 		<hr>
 		<div class="row clearfix">
 			<div class="col-xs-12 column">
