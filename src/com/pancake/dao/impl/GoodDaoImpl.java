@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.pancake.dao.GoodDao;
+import com.pancake.entity.Classification;
 import com.pancake.entity.Good;
+import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.util.BaseHibernateDAO;
 import com.pancake.util.HibernateSessionFactory;
@@ -39,6 +41,47 @@ public class GoodDaoImpl implements GoodDao {
 	public static final String FREIGHT = "freight";
 	public static final String DESCRIPTION = "description";
 	public static final String STATUS = "status";
+
+	
+	@Override
+	public List<Good> findByclassification(Classification classification, int offset, int length) {
+		List<Good> entitylist = null;
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Query query = session.createQuery("from Good where classification = ? and status != 0 order by add_time desc");
+			query.setParameter(0, classification);
+			query.setFirstResult(offset);
+			query.setMaxResults(length);
+			entitylist = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+
+		} catch (RuntimeException re) {
+			throw re;
+		}
+
+		return entitylist;
+	}
+
+	@Override
+	public List<Good> findByclassificationCount(Classification classification) {
+		List<Good> entitylist = null;
+		try {
+			Session session = HibernateSessionFactory.getSession();
+			Transaction transaction = session.beginTransaction();
+			Query query = session.createQuery("from Good where classification = ? and status != 0 order by add_time desc");
+			query.setParameter(0, classification);
+			entitylist = query.list();
+			transaction.commit();
+			HibernateSessionFactory.closeSession();
+
+		} catch (RuntimeException re) {
+			throw re;
+		}
+
+		return entitylist;
+	}
 
 	@Override
 	public List<Good> queryGoodWithPage(int offset, int length, Object user) {

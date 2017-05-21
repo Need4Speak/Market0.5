@@ -16,6 +16,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pancake.dao.ClassificationDao;
 import com.pancake.dao.GoodDao;
 import com.pancake.entity.Classification;
 import com.pancake.entity.Good;
@@ -38,6 +39,8 @@ public class GoodServiceImpl implements GoodService {
 	private GoodDao gd;
 	@Autowired
 	private UserService us;
+	@Autowired
+	private ClassificationDao cd;
 
 	
 	@Override
@@ -54,11 +57,29 @@ public class GoodServiceImpl implements GoodService {
 		// 分页查询结果集
 		List<Good> list = gd.findAllGoodsWithPage(offset, pageSize);
 		// 总记录数
-		ArrayList<Good> goodsList = null;
-		goodsList = (ArrayList<Good>) gd.findAllByAddTime();
+		ArrayList<Good> goodsList = (ArrayList<Good>) gd.findAllByAddTime();
 
 		int allRow = goodsList.size();
 
+		page.setPageNo(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalRecords(allRow);
+		page.setList(list);
+
+		return page;
+	}
+
+	@Override
+	public Page<Good> getByclassification(Integer classificationId, int currentPage, int pageSize) {
+		Classification classification = cd.findById(classificationId);
+		Page<Good> page = new Page<Good>();
+		// 当前页开始记录
+		int offset = page.countOffset(currentPage, pageSize);
+		// 分页查询结果集
+		List<Good> list = gd.findByclassification(classification, offset, pageSize);
+		// 总记录数
+		int allRow = gd.findByclassificationCount(classification).size();
+		
 		page.setPageNo(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalRecords(allRow);

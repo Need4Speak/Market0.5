@@ -16,7 +16,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 
+import com.pancake.entity.Classification;
 import com.pancake.entity.Good;
+import com.pancake.entity.Page;
 import com.pancake.entity.User;
 import com.pancake.util.HibernateSessionFactory;
 
@@ -28,6 +30,10 @@ import com.pancake.util.HibernateSessionFactory;
 *
 */
 public interface GoodDao {
+	public List<Good> findByclassification(Classification classification, int offset, int length);
+	
+	public List<Good> findByclassificationCount(Classification classification);
+	
 	public List<Good> queryGoodWithPage(int offset, int length, Object user);
 	
 	public List findByUser(User user);

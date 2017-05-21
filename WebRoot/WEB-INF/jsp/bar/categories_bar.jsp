@@ -1,4 +1,6 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="webroot" value="${pageContext.request.contextPath}" />
 <style type="text/css">
 .categories {
     text-align: center;
@@ -17,27 +19,27 @@
                     <tr>
                         <td style="width:20%;">
                             <div>
-                                <a href="GoodController/IndexController?classification_id=2"><span class="whiteFont">电子</span></a>
+                                <a href="${webroot}/GoodController/goodsWithClassificationController?classificationId=2"><span class="whiteFont">电子</span></a>
                             </div>
                         </td>
                         <td style="width:20%;">
                             <div>
-                                <a href="GoodController/IndexController?classification_id=3"><span class="whiteFont">服装</span></a>
+                                <a href="${webroot}/GoodController/goodsWithClassificationController?classificationId=3"><span class="whiteFont">服装</span></a>
                             </div>
                         </td>
                         <td style="width: 20%;">
                             <div>
-                                <a href="GoodController/IndexController?classification_id=4"><span class="whiteFont">美妆</span></a>
+                                <a href="${webroot}/GoodController/goodsWithClassificationController?classificationId=4"><span class="whiteFont">美妆</span></a>
                             </div>
                         </td>
                         <td style="width: 20%;">
                             <div>
-                                <a href="GoodController/IndexController?classification_id=5"><span class="whiteFont">食品</span></a>
+                                <a href="${webroot}/GoodController/goodsWithClassificationController?classificationId=5"><span class="whiteFont">食品</span></a>
                             </div>
                         </td>
                         <td style="width: 20%;">
                             <div>
-                                <a href="GoodController/IndexController?classification_id=6"><span class="whiteFont">图书</a>
+                                <a href="${webroot}/GoodController/goodsWithClassificationController?classificationId=6"><span class="whiteFont">图书</span></a>
                             </div>
                         </td>
                     </tr>

@@ -63,7 +63,7 @@ public class GoodController {
 	private LeaveWordsService lws;
 
 	@RequestMapping(value = "/IndexController")
-	public ModelAndView findAllGood(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView findAllGood(HttpServletRequest request) {
 		// 获取所有商品的信息
 		logger.info("IndexController called");
 		ModelAndView mav = new ModelAndView("show_goods");
@@ -76,6 +76,33 @@ public class GoodController {
 			int pageSize = 8;
 			Page page = gs.getAllGoodsWithPage(pageNo, pageSize);
 			mav.addObject(page);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	/**
+	 * 处理分类展示商品
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/goodsWithClassificationController")
+	public ModelAndView goodsWithClassification(HttpServletRequest request) {
+		// 获取所有商品的信息
+		logger.info("IndexController called");
+		Integer classificationId = Integer.valueOf(request.getParameter("classificationId"));
+		ModelAndView mav = new ModelAndView("goods_with_classification");
+		try {
+			int pageNo = 1;
+			if (request.getParameter("pageNo") != null) {
+				pageNo = Integer.valueOf(request.getParameter("pageNo"));
+				logger.debug("pageNo: " + pageNo);
+			}
+			int pageSize = 8;
+			Page page = gs.getByclassification(classificationId, pageNo, pageSize);
+			mav.addObject("page", page);
+			mav.addObject("classificationId", classificationId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
